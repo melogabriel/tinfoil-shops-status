@@ -4,28 +4,23 @@ import time
 
 SOURCE_URL = "https://melogabriel.github.io/tinfoil-shops/"
 
-def fetch_hosts():
-    try:
-        response = requests.get(SOURCE_URL)
-        response.raise_for_status()
-        hosts = re.findall(r"host:\s*(.+)", response.text, re.IGNORECASE)
-        return [h.strip() for h in hosts]
-    except Exception as e:
-        print(f"Failed to fetch host list: {e}")
-        return []
-
 def check_url_status(url):
     try:
         response = requests.get(f"http://{url}", timeout=10)
-        return response.status_code
+        if response.status_code != 200:
+            return f"DOWN ({response.status_code})"
+        
+        content = response.text.lower()
+
+        # Examples of working content (very basic match for file list or title)
+        if "nsp" in content or "title" in content or ".nsp" in content:
+            return "✅ OK"
+
+        # Looks like a blank page or placeholder
+        if len(content.strip()) < 300:
+            return "⚠️ Blank or minimal content"
+
+        return "⚠️ Unexpected content"
+
     except requests.RequestException as e:
-        return f"Error: {e}"
-
-def main():
-    hosts = fetch_hosts()
-    for host in hosts:
-        status = check_url_status(host)
-        print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {host} -> {status}")
-
-if __name__ == "__main__":
-    main()
+        return f"❌ Error: {e}"
