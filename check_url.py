@@ -17,9 +17,23 @@ def fetch_hosts():
 def check_url_status(url):
     try:
         response = requests.get(f"http://{url}", timeout=10)
-        return response.status_code
+        if response.status_code != 200:
+            return f"❌ DOWN ({response.status_code})"
+        
+        content = response.text.lower()
+
+        # Heuristics for functional Tinfoil shops
+        if "nsp" in content or ".nsp" in content or "title" in content or "tinfoil" in content:
+            return "✅ OK"
+
+        # Page is too empty or generic
+        if len(content.strip()) < 300:
+            return "⚠️ Blank or minimal content"
+
+        return "⚠️ Unexpected content"
+
     except requests.RequestException as e:
-        return f"Error: {e}"
+        return f"❌ Error: {e}"
 
 def main():
     hosts = fetch_hosts()
