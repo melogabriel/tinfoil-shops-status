@@ -22,7 +22,6 @@ def check_url_status(url):
 
         content = response.text.lower()
 
-        # Keywords that suggest the page is functioning
         working_indicators = [
             ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
             "eshop", "switch", "game", "region", "release"
@@ -30,7 +29,6 @@ def check_url_status(url):
         if any(good in content for good in working_indicators):
             return "✅ OK"
 
-        # Keywords that clearly suggest an error or broken page
         broken_indicators = [
             "default web page", "site not found", "502 bad gateway",
             "this site can’t be reached", "<title>error", "error 403"
@@ -38,21 +36,31 @@ def check_url_status(url):
         if any(bad in content for bad in broken_indicators):
             return "❌ Error/Placeholder content"
 
-        # Page seems too empty
         if len(content.strip()) < 300:
             return "⚠️ Possibly blank or minimal content"
 
-        # Unknown but no error signs
-        return "⚠️ Unknown structure, needs review"
+        return "⚠️ Under maintenance"
 
     except requests.RequestException as e:
         return f"❌ Error: {e}"
 
+def generate_readme(results):
+    with open("README.md", "w", encoding="utf-8") as f:
+        f.write("# Tinfoil Shop Monitor\n")
+        f.write(f"_Last updated: {time.strftime('%Y-%m-%d %H:%M:%S')}_\n\n")
+        f.write("| Host | Status |\n")
+        f.write("|------|--------|\n")
+        for host, status in results:
+            f.write(f"| `{host}` | {status} |\n")
+
 def main():
     hosts = fetch_hosts()
+    results = []
     for host in hosts:
         status = check_url_status(host)
         print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {host} -> {status}")
+        results.append((host, status))
+    generate_readme(results)
 
 if __name__ == "__main__":
     main()
