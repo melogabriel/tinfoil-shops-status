@@ -22,33 +22,28 @@ def check_url_status(url):
 
         content = response.text.lower()
 
-        # BLOCKLIST: Signs of broken/misconfigured or placeholder pages
-        broken_indicators = [
-            "403 forbidden",
-            "cloudflare",
-            "not found",
-            "<title>error",
-            "default web page",
-            "site not found",
-            "502 bad gateway",
-            "this site can’t be reached"
-        ]
-        if any(bad in content for bad in broken_indicators):
-            return "❌ Error/Placeholder content"
-
-        # ALLOWLIST: Signs of a working shop
+        # Keywords that suggest the page is functioning
         working_indicators = [
-            ".nsp", ".xci", "title", "tinfoil", "game",
-            "/files/", "nsz", "eshop", "iso", "region", "release"
+            ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
+            "eshop", "switch", "game", "region", "release"
         ]
         if any(good in content for good in working_indicators):
             return "✅ OK"
 
-        # Page is very short or looks empty
-        if len(content.strip()) < 500:
-            return "⚠️ Blank or minimal content"
+        # Keywords that clearly suggest an error or broken page
+        broken_indicators = [
+            "default web page", "site not found", "502 bad gateway",
+            "this site can’t be reached", "<title>error", "error 403"
+        ]
+        if any(bad in content for bad in broken_indicators):
+            return "❌ Error/Placeholder content"
 
-        return "⚠️ Unexpected content"
+        # Page seems too empty
+        if len(content.strip()) < 300:
+            return "⚠️ Possibly blank or minimal content"
+
+        # Unknown but no error signs
+        return "⚠️ Unknown structure, needs review"
 
     except requests.RequestException as e:
         return f"❌ Error: {e}"
