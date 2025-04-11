@@ -1,0 +1,32 @@
+name: Update Shop Status
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # every 6 hours
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run script
+        run: python check_url.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add README.md
+          git commit -m "🛠️ Update shop statuses"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
