@@ -1,9 +1,14 @@
-# URL Monitor for Tinfoil Shops
+# Tinfoil Shop Monitor
+_Last updated: 2025-04-11 22:59:06_
 
-This GitHub Action checks the availability of Nintendo Switch Tinfoil shop hosts listed on [melogabriel.github.io/tinfoil-shops](https://melogabriel.github.io/tinfoil-shops/).
-
-It fetches the list, checks each host's HTTP status, and prints the result to the GitHub Actions log.
-
-## Schedule
-
-- Runs every 30 minutes via GitHub Actions.
+| Host | Status |
+|------|--------|
+| `tinfoil.oragne.dev` | ✅ OK |
+| `raw.githubusercontent.com` | ✅ OK |
+| `cyrilz87.net` | ✅ OK |
+| `tinfoil.ultranx.ru` | ✅ OK |
+| `nx.ghostland.at` | ⚠️ Under maintenance |
+| `nx-retro.ghostland.at` | ✅ OK |
+| `games.jits.site` | ❌ Error: HTTPConnectionPool(host='games.jits.site', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x7f34a05c5150>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
+| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f34a05c6250>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f34a05c6470>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
