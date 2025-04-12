@@ -46,7 +46,9 @@ def check_url_status(url):
 
 def generate_readme(results):
     with open("README.md", "w", encoding="utf-8") as f:
-        f.write("# Tinfoil Shop Monitor\n")
+        f.write("# Tinfoil Shops Status Monitor [![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml)\n")
+        f.write("This repository checks the status of the tinfoil shops listed on https://melogabriel.github.io/tinfoil-shops/ every 6 hours.\n")
+        f.write("If you find it useful to monitor which shops are working, please consider giving this repository a star: https://github.com/melogabriel/tinfoil-shops-status\n")
         f.write(f"_Last updated: {time.strftime('%Y-%m-%d %H:%M:%S')}_\n\n")
         f.write("| Host | Status |\n")
         f.write("|------|--------|\n")
