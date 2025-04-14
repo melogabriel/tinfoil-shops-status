@@ -5,7 +5,7 @@
 
  If you find it useful to monitor which shops are working, please consider giving this repository a star: [Star on GitHub](https://github.com/melogabriel/tinfoil-shops-status) 
 
- _Last updated: 2025-04-14 12:30:38_
+ _Last updated: 2025-04-14 18:21:07_
 
 | Host | Status |
 |------|--------|
@@ -15,6 +15,6 @@
 | `tinfoil.ultranx.ru` | ✅ OK |
 | `nx.ghostland.at` | ⚠️ Under maintenance |
 | `nx-retro.ghostland.at` | ✅ OK |
-| `games.jits.site` | ❌ Error: HTTPConnectionPool(host='games.jits.site', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x7fb7a6cd5150>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
-| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fb7a6cd6250>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
-| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fb7a6cd6470>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `games.jits.site` | ❌ Error: HTTPConnectionPool(host='games.jits.site', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x7f0ffbda5150>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
+| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f0ffbda6250>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f0ffbda6470>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
