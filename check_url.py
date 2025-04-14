@@ -1,8 +1,11 @@
 import requests
 import re
 import time
+from datetime import datetime
+import pytz  # You’ll need to add this to requirements if running locally
 
 SOURCE_URL = "https://melogabriel.github.io/tinfoil-shops/"
+TIMEZONE = "America/Sao_Paulo"  # Change as needed
 
 def fetch_hosts():
     try:
@@ -45,16 +48,35 @@ def check_url_status(url):
         return f"❌ Error: {e}"
 
 def generate_readme(results):
+    # Sort by status (optional)
+    results.sort(key=lambda x: x[1])
+
+    # Timezone-aware last updated
+    tz = pytz.timezone(TIMEZONE)
+    now = datetime.now(tz)
+    last_updated = now.strftime('%Y-%m-%d %H:%M:%S %Z')
+
     with open("README.md", "w", encoding="utf-8") as f:
-        f.write("# Tinfoil Shops Status Monitor \n")
-        f.write("[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) \n")
-        f.write("\n This repository checks the status of the tinfoil shops listed on [this page](https://melogabriel.github.io/tinfoil-shops/) every 6 hours. \n")
-        f.write("\n If you find it useful to monitor which shops are working, please consider giving this repository a star: [Star on GitHub](https://github.com/melogabriel/tinfoil-shops-status) \n")
-        f.write(f"\n _Last updated: {time.strftime('%Y-%m-%d %H:%M:%S')}_\n\n")
+        f.write("# 🛒 Tinfoil Shops Status Monitor\n\n")
+        f.write("[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml)\n\n")
+        f.write("This page monitors the availability of Tinfoil shops from [this source list](https://melogabriel.github.io/tinfoil-shops/) and updates automatically every 6 hours.\n\n")
+        f.write("If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!\n\n")
+
+        f.write(f"**Last updated:** `{last_updated}`\n\n")
+
+        f.write("### 🔍 Status Legend\n")
+        f.write("- ✅ OK — Shop is online and serving valid content\n")
+        f.write("- ⚠️ Possibly blank — Low-content or unusual page\n")
+        f.write("- ❌ DOWN/Error — Shop not reachable or shows error\n\n")
+
+        f.write("### 📋 Current Shop Status\n\n")
         f.write("| Host | Status |\n")
         f.write("|------|--------|\n")
         for host, status in results:
             f.write(f"| `{host}` | {status} |\n")
+
+        f.write("\n---\n")
+        f.write("_This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only._\n")
 
 def main():
     hosts = fetch_hosts()
