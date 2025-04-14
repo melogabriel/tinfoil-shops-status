@@ -2,7 +2,7 @@ import requests
 import re
 import time
 from datetime import datetime
-import pytz  # You’ll need to add this to requirements if running locally
+import pytz  
 
 SOURCE_URL = "https://melogabriel.github.io/tinfoil-shops/"
 TIMEZONE = "America/Sao_Paulo"  # Change as needed
