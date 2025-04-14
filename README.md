@@ -1,20 +1,31 @@
-# Tinfoil Shops Status Monitor 
-[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) 
+# 🛒 Tinfoil Shops Status Monitor
 
- This repository checks the status of the tinfoil shops listed on [this page](https://melogabriel.github.io/tinfoil-shops/) every 6 hours. 
+[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml)
 
- If you find it useful to monitor which shops are working, please consider giving this repository a star: [Star on GitHub](https://github.com/melogabriel/tinfoil-shops-status) 
+This page monitors the availability of Tinfoil shops from [this source list](https://melogabriel.github.io/tinfoil-shops/) and updates automatically every 6 hours.
 
- _Last updated: 2025-04-14 18:21:07_
+If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
+
+**Last updated:** `2025-04-14 16:21:27 -03`
+
+### 🔍 Status Legend
+- ✅ OK — Shop is online and serving valid content
+- ⚠️ Possibly blank — Low-content or unusual page
+- ❌ DOWN/Error — Shop not reachable or shows error
+
+### 📋 Current Shop Status
 
 | Host | Status |
 |------|--------|
+| `nx.ghostland.at` | ⚠️ Under maintenance |
 | `tinfoil.oragne.dev` | ✅ OK |
 | `raw.githubusercontent.com` | ✅ OK |
 | `cyrilz87.net` | ✅ OK |
 | `tinfoil.ultranx.ru` | ✅ OK |
-| `nx.ghostland.at` | ⚠️ Under maintenance |
 | `nx-retro.ghostland.at` | ✅ OK |
-| `games.jits.site` | ❌ Error: HTTPConnectionPool(host='games.jits.site', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x7f0ffbda5150>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
-| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f0ffbda6250>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
-| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f0ffbda6470>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fa2970ae8b0>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fa2970aead0>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `games.jits.site` | ❌ Error: HTTPConnectionPool(host='games.jits.site', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x7fa2970ad7b0>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
+
+---
+_This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only._
