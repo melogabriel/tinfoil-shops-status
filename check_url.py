@@ -25,24 +25,34 @@ def check_url_status(url):
 
         content = response.text.lower()
 
-        # Step 1: Maintenance or placeholder
+        # Step 1: Check for strong maintenance indicators
         maintenance_indicators = [
-            "under maintenance", "site is under maintenance",
-            "working on", "will be back", "site is being updated",
-            "we are currently", "maintenance mode", "under construction"
+            "maintenance mode",
+            "we are working on something",
+            "site is under maintenance",
+            "will be back soon",
+            "under maintenance",
+            "coming soon",
+            "under construction",
+            "we are currently performing maintenance"
         ]
-        if any(word in content for word in maintenance_indicators):
+        if any(phrase in content for phrase in maintenance_indicators):
             return "⚠️ Under maintenance"
 
-        # Step 2: Broken placeholder
+        # Step 2: Check for broken or placeholder pages
         broken_indicators = [
-            "default web page", "site not found", "502 bad gateway",
-            "this site can’t be reached", "<title>error", "error 403"
+            "default web page",
+            "site not found",
+            "502 bad gateway",
+            "this site can’t be reached",
+            "<title>error",
+            "error 403",
+            "nginx test page"
         ]
         if any(bad in content for bad in broken_indicators):
             return "❌ Error/Placeholder content"
 
-        # Step 3: Check for real working indicators
+        # Step 3: Check for real content (download/file/game-related)
         working_indicators = [
             ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
             "eshop", "switch", "game", "region", "release"
@@ -50,7 +60,7 @@ def check_url_status(url):
         if any(good in content for good in working_indicators):
             return "✅ OK"
 
-        # Step 4: Very short content
+        # Step 4: Possibly blank or minimal content
         if len(content.strip()) < 300:
             return "⚠️ Possibly blank or minimal content"
 
