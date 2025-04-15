@@ -25,7 +25,7 @@ def check_url_status(url):
 
         content = response.text.lower()
 
-        # Step 1: Check for strong maintenance indicators
+        # Step 1: Maintenance indicators — top priority
         maintenance_indicators = [
             "maintenance mode",
             "we are working on something",
@@ -34,12 +34,14 @@ def check_url_status(url):
             "under maintenance",
             "coming soon",
             "under construction",
-            "we are currently performing maintenance"
+            "currently performing maintenance",
+            "we are currently performing maintenance",
+            "this page is under maintenance"
         ]
         if any(phrase in content for phrase in maintenance_indicators):
             return "⚠️ Under maintenance"
 
-        # Step 2: Check for broken or placeholder pages
+        # Step 2: Broken or placeholder indicators
         broken_indicators = [
             "default web page",
             "site not found",
@@ -52,7 +54,11 @@ def check_url_status(url):
         if any(bad in content for bad in broken_indicators):
             return "❌ Error/Placeholder content"
 
-        # Step 3: Check for real content (download/file/game-related)
+        # Step 3: Empty/minimal content
+        if len(content.strip()) < 300:
+            return "⚠️ Possibly blank or minimal content"
+
+        # Step 4: Working shop indicators
         working_indicators = [
             ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
             "eshop", "switch", "game", "region", "release"
@@ -60,14 +66,12 @@ def check_url_status(url):
         if any(good in content for good in working_indicators):
             return "✅ OK"
 
-        # Step 4: Possibly blank or minimal content
-        if len(content.strip()) < 300:
-            return "⚠️ Possibly blank or minimal content"
-
+        # Step 5: Fallback case
         return "⚠️ Unclear or low-confidence status"
 
     except requests.RequestException as e:
         return f"❌ Error: {e}"
+
 
 
 def generate_readme(results):
