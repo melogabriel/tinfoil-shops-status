@@ -25,20 +25,13 @@ def check_url_status(url):
 
         content = response.text.lower()
 
-        # Step 1: Maintenance indicators
-        maintenance_indicators = [
-            "maintenance mode",
-            "under maintenance",
-            "we are currently performing maintenance",
-            "this page is under maintenance",
-            "we are working on something",
-            "will be back soon",
-            "coming soon",
-            "under construction"
+        # Step 1: Working indicators — PRIORITY ✅
+        working_indicators = [
+            ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
+            "eshop", "switch", "game", "region", "release"
         ]
-        for phrase in maintenance_indicators:
-            if phrase in content:
-                return "⚠️ Under maintenance"
+        if any(phrase in content for phrase in working_indicators):
+            return "✅ OK"
 
         # Step 2: Error/Placeholder indicators
         broken_indicators = [
@@ -50,24 +43,28 @@ def check_url_status(url):
             "error 403",
             "nginx test page"
         ]
-        for phrase in broken_indicators:
-            if phrase in content:
-                return "❌ Error/Placeholder content"
+        if any(phrase in content for phrase in broken_indicators):
+            return "❌ Error/Placeholder content"
 
         # Step 3: Minimal content
         if len(content.strip()) < 300:
             return "⚠️ Possibly blank or minimal content"
 
-        # Step 4: Working indicators
-        working_indicators = [
-            ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
-            "eshop", "switch", "game", "region", "release"
+        # Step 4: Maintenance indicators — LAST ⚠️
+        maintenance_indicators = [
+            "maintenance mode",
+            "under maintenance",
+            "we are currently performing maintenance",
+            "this page is under maintenance",
+            "we are working on something",
+            "will be back soon",
+            "coming soon",
+            "under construction"
         ]
-        for phrase in working_indicators:
-            if phrase in content:
-                return "✅ OK"
+        if any(phrase in content for phrase in maintenance_indicators):
+            return "⚠️ Under maintenance"
 
-        # Step 5: Default fallback
+        # Step 5: Fallback if none matched
         return "⚠️ Unclear or low-confidence status"
 
     except requests.RequestException as e:
@@ -83,19 +80,19 @@ def generate_readme(results):
     last_updated = now.strftime('%Y-%m-%d %H:%M:%S %Z')
 
     with open("README.md", "w", encoding="utf-8") as f:
-        f.write("# 🛒 Tinfoil Shops Status Monitor\n\n")
+        f.write("#  Tinfoil Shops Status Monitor\n\n")
         f.write("[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml)\n\n")
         f.write("This page monitors the availability of Tinfoil shops from [this source list](https://melogabriel.github.io/tinfoil-shops/) and updates automatically every 6 hours.\n\n")
         f.write("If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!\n\n")
 
         f.write(f"**Last updated:** `{last_updated}`\n\n")
 
-        f.write("### 🔍 Status Legend\n")
+        f.write("### Status Legend\n")
         f.write("- ✅ OK — Shop is online and serving valid content\n")
         f.write("- ⚠️ Possibly blank — Low-content or unusual page\n")
         f.write("- ❌ DOWN/Error — Shop not reachable or shows error\n\n")
 
-        f.write("### 📋 Current Shop Status\n\n")
+        f.write("### Current Shop Status\n\n")
         f.write("| Host | Status |\n")
         f.write("|------|--------|\n")
         for host, status in results:
