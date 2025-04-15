@@ -52,6 +52,8 @@ def check_url_status(url):
 
         # Step 4: Maintenance indicators — LAST ⚠️
         maintenance_indicators = [
+            "Site Maintenance",
+            "undergoing maintenance",
             "maintenance mode",
             "under maintenance",
             "we are currently performing maintenance",
