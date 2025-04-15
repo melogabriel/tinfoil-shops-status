@@ -25,13 +25,16 @@ def check_url_status(url):
 
         content = response.text.lower()
 
-        working_indicators = [
-            ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
-            "eshop", "switch", "game", "region", "release"
+        # Step 1: Maintenance or placeholder
+        maintenance_indicators = [
+            "under maintenance", "site is under maintenance",
+            "working on", "will be back", "site is being updated",
+            "we are currently", "maintenance mode", "under construction"
         ]
-        if any(good in content for good in working_indicators):
-            return "✅ OK"
+        if any(word in content for word in maintenance_indicators):
+            return "⚠️ Under maintenance"
 
+        # Step 2: Broken placeholder
         broken_indicators = [
             "default web page", "site not found", "502 bad gateway",
             "this site can’t be reached", "<title>error", "error 403"
@@ -39,13 +42,23 @@ def check_url_status(url):
         if any(bad in content for bad in broken_indicators):
             return "❌ Error/Placeholder content"
 
+        # Step 3: Check for real working indicators
+        working_indicators = [
+            ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
+            "eshop", "switch", "game", "region", "release"
+        ]
+        if any(good in content for good in working_indicators):
+            return "✅ OK"
+
+        # Step 4: Very short content
         if len(content.strip()) < 300:
             return "⚠️ Possibly blank or minimal content"
 
-        return "⚠️ Under maintenance"
+        return "⚠️ Unclear or low-confidence status"
 
     except requests.RequestException as e:
         return f"❌ Error: {e}"
+
 
 def generate_readme(results):
     # Sort by status (optional)
