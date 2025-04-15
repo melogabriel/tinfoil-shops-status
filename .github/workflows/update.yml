@@ -22,7 +22,7 @@ jobs:
         run: pip install pytz
         
       - name: Install BeautifulSoup
-        run: pip install BeautifulSoup  
+        run: pip install beautifulsoup4  
 
       - name: Run script
         run: python check_url.py
