@@ -7,6 +7,7 @@ import pytz
 SOURCE_URL = "https://melogabriel.github.io/tinfoil-shops/"
 TIMEZONE = "America/Sao_Paulo"  # Change as needed
 
+
 def fetch_hosts():
     try:
         response = requests.get(SOURCE_URL)
@@ -17,60 +18,62 @@ def fetch_hosts():
         print(f"Failed to fetch host list: {e}")
         return []
 
+from bs4 import BeautifulSoup
+
 def check_url_status(url):
     try:
-        response = requests.get(f"http://{url}", timeout=10)
+        response = requests.get(f"https://{url}", timeout=10)
+        print(f"Fetching: https://{url} -> {response.status_code}")
+
         if response.status_code != 200:
             return f"❌ DOWN ({response.status_code})"
 
         content = response.text.lower()
 
-        # Step 1: Working indicators — PRIORITY ✅
+        # Debug specific domains
+        if "ghostland" in url or "oragne" in url:
+            print(f"\n--- DEBUG: Content from {url} ---")
+            print(content[:1000])
+            print("--- END DEBUG ---\n")
+
+        # Parse using BeautifulSoup to analyze structure
+        soup = BeautifulSoup(content, "html.parser")
+        title_text = soup.title.string.strip().lower() if soup.title else ""
+
+        # Step 1: Maintenance if the title clearly says it
+        if "maintenance" in title_text:
+            return "⚠️ Under maintenance"
+
+        # Optional: look at headers (h1/h2) if needed
+        headers = " ".join(h.get_text().lower() for h in soup.find_all(["h1", "h2"]))
+        if "maintenance" in headers:
+            return "⚠️ Under maintenance"
+
+        # Step 2: Broken indicators
+        broken_indicators = [
+            "default web page", "site not found", "502 bad gateway",
+            "this site can’t be reached", "<title>error", "error 403"
+        ]
+        if any(bad in content for bad in broken_indicators):
+            return "❌ Error/Placeholder content"
+
+        # Step 3: Possibly blank content
+        if len(content.strip()) < 300:
+            return "⚠️ Possibly blank or minimal content"
+
+        # Step 4: Working indicators
         working_indicators = [
             ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
             "eshop", "switch", "game", "region", "release"
         ]
-        if any(phrase in content for phrase in working_indicators):
+        if any(good in content for good in working_indicators):
             return "✅ OK"
 
-        # Step 2: Error/Placeholder indicators
-        broken_indicators = [
-            "default web page",
-            "site not found",
-            "502 bad gateway",
-            "this site can’t be reached",
-            "<title>error",
-            "error 403",
-            "nginx test page"
-        ]
-        if any(phrase in content for phrase in broken_indicators):
-            return "❌ Error/Placeholder content"
-
-        # Step 3: Minimal content
-        if len(content.strip()) < 300:
-            return "⚠️ Possibly blank or minimal content"
-
-        # Step 4: Maintenance indicators — LAST ⚠️
-        maintenance_indicators = [
-            "Site Maintenance",
-            "undergoing maintenance",
-            "maintenance mode",
-            "under maintenance",
-            "we are currently performing maintenance",
-            "this page is under maintenance",
-            "we are working on something",
-            "will be back soon",
-            "coming soon",
-            "under construction"
-        ]
-        if any(phrase in content for phrase in maintenance_indicators):
-            return "⚠️ Under maintenance"
-
-        # Step 5: Fallback if none matched
-        return "⚠️ Unclear or low-confidence status"
+        return "⚠️ Unknown"
 
     except requests.RequestException as e:
         return f"❌ Error: {e}"
+
 
 def generate_readme(results):
     # Sort by status (optional)
