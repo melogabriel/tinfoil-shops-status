@@ -25,23 +25,22 @@ def check_url_status(url):
 
         content = response.text.lower()
 
-        # Step 1: Maintenance indicators — top priority
+        # Step 1: Maintenance indicators
         maintenance_indicators = [
             "maintenance mode",
-            "we are working on something",
-            "site is under maintenance",
-            "will be back soon",
             "under maintenance",
-            "coming soon",
-            "under construction",
-            "currently performing maintenance",
             "we are currently performing maintenance",
-            "this page is under maintenance"
+            "this page is under maintenance",
+            "we are working on something",
+            "will be back soon",
+            "coming soon",
+            "under construction"
         ]
-        if any(phrase in content for phrase in maintenance_indicators):
-            return "⚠️ Under maintenance"
+        for phrase in maintenance_indicators:
+            if phrase in content:
+                return "⚠️ Under maintenance"
 
-        # Step 2: Broken or placeholder indicators
+        # Step 2: Error/Placeholder indicators
         broken_indicators = [
             "default web page",
             "site not found",
@@ -51,28 +50,28 @@ def check_url_status(url):
             "error 403",
             "nginx test page"
         ]
-        if any(bad in content for bad in broken_indicators):
-            return "❌ Error/Placeholder content"
+        for phrase in broken_indicators:
+            if phrase in content:
+                return "❌ Error/Placeholder content"
 
-        # Step 3: Empty/minimal content
+        # Step 3: Minimal content
         if len(content.strip()) < 300:
             return "⚠️ Possibly blank or minimal content"
 
-        # Step 4: Working shop indicators
+        # Step 4: Working indicators
         working_indicators = [
             ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
             "eshop", "switch", "game", "region", "release"
         ]
-        if any(good in content for good in working_indicators):
-            return "✅ OK"
+        for phrase in working_indicators:
+            if phrase in content:
+                return "✅ OK"
 
-        # Step 5: Fallback case
+        # Step 5: Default fallback
         return "⚠️ Unclear or low-confidence status"
 
     except requests.RequestException as e:
         return f"❌ Error: {e}"
-
-
 
 def generate_readme(results):
     # Sort by status (optional)
