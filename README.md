@@ -6,7 +6,7 @@ This page monitors the availability of Tinfoil shops from [this source list](htt
 
 If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
 
-**Last updated:** `2025-04-15 06:12:23 -03`
+**Last updated:** `2025-04-15 06:16:50 -03`
 
 ### 🔍 Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -23,9 +23,9 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 | `tinfoil.ultranx.ru` | ✅ OK |
 | `nx.ghostland.at` | ✅ OK |
 | `nx-retro.ghostland.at` | ✅ OK |
-| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2fb6d7a8b0>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
-| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2fb6d7aad0>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
-| `games.jits.site` | ❌ Error: HTTPConnectionPool(host='games.jits.site', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x7f2fb6d797b0>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
+| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f673dbce8b0>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `e.cchi.me` | ❌ Error: HTTPConnectionPool(host='e.cchi.me', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f673dbcead0>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `games.jits.site` | ❌ Error: HTTPConnectionPool(host='games.jits.site', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x7f673dbcd7b0>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
 
 ---
 _This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only._
