@@ -82,7 +82,7 @@ def generate_readme(results):
     # Timezone-aware last updated
     tz = pytz.timezone(TIMEZONE)
     now = datetime.now(tz)
-    last_updated = now.strftime('%Y-%m-%d %H:%M:%S %Z')
+    last_updated = now.strftime('%Y-%m-%d %H:%M:%S %OZ')
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.write("#  Tinfoil Shops Status Monitor\n\n")
