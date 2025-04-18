@@ -90,7 +90,7 @@ def generate_readme(results):
         f.write("This page monitors the availability of Tinfoil shops from [this source list](https://melogabriel.github.io/tinfoil-shops/) and updates automatically every 6 hours.\n\n")
         f.write("If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!\n\n")
 
-        f.write(f"**Last updated:** `{last_updated}` {TIMEZONE}\n\n")
+        f.write(f"**Last updated:** `{last_updated}`{tz}\n\n")
 
         f.write("### Status Legend\n")
         f.write("- ✅ OK — Shop is online and serving valid content\n")
