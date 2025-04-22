@@ -1,27 +1,49 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: Deploy GitHub Pages
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'README.md'
-
-  # Allows you to run this workflow manually from the Actions tab
+  # Trigger every 6 hours
+  schedule:
+    - cron: '0 */6 * * *'  # every 6 hours
+  # Allow manual trigger from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Jekyll (or your static site generator)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Build site (Adjust if you use another build tool)
+        run: |
+          bundle exec jekyll build  # Modify if you use a different generator
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: './_site'  # Modify to the correct path for your build output
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
 
 jobs:
   # Build job
