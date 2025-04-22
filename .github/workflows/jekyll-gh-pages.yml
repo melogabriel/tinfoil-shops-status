@@ -4,7 +4,7 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
+  
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   
@@ -43,7 +43,7 @@ jobs:
         run: |
           bundle exec jekyll build  # Modify if you use a different generator
 
-      - name: Upload artifact
+      - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v2
         with:
           path: './_site'  # Modify to the correct path for your build output
