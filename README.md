@@ -1,6 +1,7 @@
 #  Tinfoil Shops Status Monitor
 
 [![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml)
+[![Deploy GitHub Pages](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/jekyll-gh-pages.yml)
 
 This page monitors the availability of Tinfoil shops from [this source list](https://melogabriel.github.io/tinfoil-shops/) and updates automatically every 6 hours.
 
