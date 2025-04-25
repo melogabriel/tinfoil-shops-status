@@ -1,13 +1,12 @@
 #  Tinfoil Shops Status Monitor
 
 [![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml)
-[![Deploy GitHub Pages](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/jekyll-gh-pages.yml)
 
 This page monitors the availability of Tinfoil shops from [this source list](https://melogabriel.github.io/tinfoil-shops/) and updates automatically every 6 hours.
 
 If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
 
-**Last updated:** `2025-04-24 15:20:43 UTC-03` 
+**Last updated:** `2025-04-24 22:12:40 UTC-03` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -24,9 +23,9 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 | `raw.githubusercontent.com` | ✅ OK |
 | `cyrilz87.net` | ✅ OK |
 | `nx-retro.ghostland.at` | ✅ OK |
-| `e.cchi.me` | ❌ Error: HTTPSConnectionPool(host='e.cchi.me', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f9ffdb75310>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
-| `e.cchi.me` | ❌ Error: HTTPSConnectionPool(host='e.cchi.me', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f9ffdb75810>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
-| `games.jits.site` | ❌ Error: HTTPSConnectionPool(host='games.jits.site', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f9ffdb75090>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
+| `e.cchi.me` | ❌ Error: HTTPSConnectionPool(host='e.cchi.me', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f9e0fcd9310>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `e.cchi.me` | ❌ Error: HTTPSConnectionPool(host='e.cchi.me', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f9e0fcd9810>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `games.jits.site` | ❌ Error: HTTPSConnectionPool(host='games.jits.site', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f9e0fcd9090>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
 | `nx-saves.ghostland.at` | ❌ Error: HTTPSConnectionPool(host='nx-saves.ghostland.at', port=443): Read timed out. (read timeout=10) |
 
 ---
