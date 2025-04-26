@@ -28,15 +28,24 @@ def check_url_status(url):
         if response.status_code != 200:
             return f"❌ DOWN ({response.status_code})"
 
+        # Check if site is forcing a file download
+        content_disposition = response.headers.get('Content-Disposition', '').lower()
+        if 'attachment' in content_disposition:
+            return "❌ Forced download (bad config)"
+
+        content_type = response.headers.get('Content-Type', '').lower()
+        if not content_type.startswith('text/html'):
+            return "❌ Invalid content type (not HTML)"
+
         content = response.text.lower()
 
         # Debug specific domains
-        if "ghostland" in url or "oragne" in url:
+        if "ghostland" in url or "oragne" in url or "cyrilz" in url:
             print(f"\n--- DEBUG: Content from {url} ---")
             print(content[:1000])
             print("--- END DEBUG ---\n")
 
-        # Parse using BeautifulSoup to analyze structure
+        # Parse using BeautifulSoup
         soup = BeautifulSoup(content, "html.parser")
         title_text = soup.title.string.strip().lower() if soup.title else ""
 
@@ -44,7 +53,6 @@ def check_url_status(url):
         if "maintenance" in title_text:
             return "⚠️ Under maintenance"
 
-        # Optional: look at headers (h1/h2) if needed
         headers = " ".join(h.get_text().lower() for h in soup.find_all(["h1", "h2"]))
         if "maintenance" in headers:
             return "⚠️ Under maintenance"
