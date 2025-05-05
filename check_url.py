@@ -21,66 +21,81 @@ def fetch_hosts():
 from bs4 import BeautifulSoup
 
 def check_url_status(url):
-    try:
-        response = requests.get(f"https://{url}", timeout=10)
-        print(f"Fetching: https://{url} -> {response.status_code}")
+    def try_fetch(scheme):
+        try:
+            full_url = f"{scheme}://{url}"
+            response = requests.get(full_url, timeout=10)
+            print(f"Fetching: {full_url} -> {response.status_code}")
+            return response
+        except requests.exceptions.SSLError:
+            print(f"SSL error on {scheme}://{url}, trying fallback...")
+            return None
+        except requests.exceptions.RequestException as e:
+            print(f"{scheme.upper()} error for {url}: {e}")
+            return None
 
-        if response.status_code != 200:
-            return f"❌ DOWN ({response.status_code})"
+    # Try HTTPS first
+    response = try_fetch("https")
+    if response is None:
+        # Try HTTP fallback
+        response = try_fetch("http")
+        if response is None:
+            return "❌ DOWN (HTTPS and HTTP failed)"
 
-        # Check if site is forcing a file download
-        content_disposition = response.headers.get('Content-Disposition', '').lower()
-        if 'attachment' in content_disposition:
-            return "❌ Forced download (bad config)"
+    if response.status_code != 200:
+        return f"❌ DOWN ({response.status_code})"
 
-        content_type = response.headers.get('Content-Type', '').lower()
-        if not content_type.startswith('text/html'):
-            return "❌ Invalid content type (not HTML)"
+    # Check if site is forcing a file download
+    content_disposition = response.headers.get('Content-Disposition', '').lower()
+    if 'attachment' in content_disposition:
+        return "❌ Forced download (bad config)"
 
-        content = response.text.lower()
+    content_type = response.headers.get('Content-Type', '').lower()
+    if not content_type.startswith('text/html'):
+        return "❌ Invalid content type (not HTML)"
 
-        # Debug specific domains
-        if "ghostland" in url or "oragne" in url or "cyrilz" in url:
-            print(f"\n--- DEBUG: Content from {url} ---")
-            print(content[:1000])
-            print("--- END DEBUG ---\n")
+    content = response.text.lower()
 
-        # Parse using BeautifulSoup
-        soup = BeautifulSoup(content, "html.parser")
-        title_text = soup.title.string.strip().lower() if soup.title else ""
+    # Debug specific domains
+    if any(key in url for key in ["ghostland", "oragne", "cyrilz", "switchbr"]):
+        print(f"\n--- DEBUG: Content from {url} ---")
+        print(content[:1000])
+        print("--- END DEBUG ---\n")
 
-        # Step 1: Maintenance if the title clearly says it
-        if "maintenance" in title_text:
-            return "⚠️ Under maintenance"
+    # Parse using BeautifulSoup
+    soup = BeautifulSoup(content, "html.parser")
+    title_text = soup.title.string.strip().lower() if soup.title else ""
 
-        headers = " ".join(h.get_text().lower() for h in soup.find_all(["h1", "h2"]))
-        if "maintenance" in headers:
-            return "⚠️ Under maintenance"
+    # Step 1: Maintenance
+    if "maintenance" in title_text:
+        return "⚠️ Under maintenance"
 
-        # Step 2: Broken indicators
-        broken_indicators = [
-            "default web page", "site not found", "502 bad gateway",
-            "this site can’t be reached", "<title>error", "error 403"
-        ]
-        if any(bad in content for bad in broken_indicators):
-            return "❌ Error/Placeholder content"
+    headers = " ".join(h.get_text().lower() for h in soup.find_all(["h1", "h2"]))
+    if "maintenance" in headers:
+        return "⚠️ Under maintenance"
 
-        # Step 3: Possibly blank content
-        if len(content.strip()) < 300:
-            return "⚠️ Possibly blank or minimal content"
+    # Step 2: Broken indicators
+    broken_indicators = [
+        "default web page", "site not found", "502 bad gateway",
+        "this site can’t be reached", "<title>error", "error 403"
+    ]
+    if any(bad in content for bad in broken_indicators):
+        return "❌ Error/Placeholder content"
 
-        # Step 4: Working indicators
-        working_indicators = [
-            ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
-            "eshop", "switch", "game", "region", "release"
-        ]
-        if any(good in content for good in working_indicators):
-            return "✅ OK"
+    # Step 3: Possibly blank content
+    if len(content.strip()) < 300:
+        return "⚠️ Possibly blank or minimal content"
 
-        return "⚠️ Unknown"
+    # Step 4: Working indicators
+    working_indicators = [
+        ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
+        "eshop", "switch", "game", "region", "release"
+    ]
+    if any(good in content for good in working_indicators):
+        return "✅ OK"
 
-    except requests.RequestException as e:
-        return f"❌ Error: {e}"
+    return "⚠️ Unknown"
+
 
 
 def generate_readme(results):
