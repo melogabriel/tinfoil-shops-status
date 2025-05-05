@@ -6,7 +6,7 @@ This page monitors the availability of Tinfoil shops from [this source list](htt
 
 If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
 
-**Last updated:** `2025-05-04 22:16:07 UTC-03` 
+**Last updated:** `2025-05-05 03:23:29 UTC-03` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -22,9 +22,9 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 | `raw.githubusercontent.com` | ✅ OK |
 | `nx-saves.ghostland.at` | ✅ OK |
 | `nx-retro.ghostland.at` | ✅ OK |
-| `e.cchi.me` | ❌ Error: HTTPSConnectionPool(host='e.cchi.me', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7feb016faad0>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
-| `e.cchi.me` | ❌ Error: HTTPSConnectionPool(host='e.cchi.me', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7feb016fb610>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
-| `games.jits.site` | ❌ Error: HTTPSConnectionPool(host='games.jits.site', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7feb016fa710>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
+| `e.cchi.me` | ❌ Error: HTTPSConnectionPool(host='e.cchi.me', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f6e6b772850>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `e.cchi.me` | ❌ Error: HTTPSConnectionPool(host='e.cchi.me', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f6e6b773610>: Failed to establish a new connection: [Errno 101] Network is unreachable')) |
+| `games.jits.site` | ❌ Error: HTTPSConnectionPool(host='games.jits.site', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f6e6b772710>: Failed to resolve 'games.jits.site' ([Errno -3] Temporary failure in name resolution)")) |
 | `switchbr.com` | ❌ Error: HTTPSConnectionPool(host='switchbr.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))) |
 | `cyrilz87.net` | ❌ Forced download (bad config) |
 | `tinfoil.ultranx.ru` | ❌ Invalid content type (not HTML) |
