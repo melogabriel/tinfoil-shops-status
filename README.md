@@ -6,7 +6,7 @@ This page monitors the availability of Tinfoil shops from [this source list](htt
 
 If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
 
-**Last updated:** `2025-05-16 22:13:51 UTC-03` 
+**Last updated:** `2025-05-17 03:20:55 UTC-03` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
