@@ -6,7 +6,7 @@ This page monitors the availability of Tinfoil shops from [this source list](htt
 
 If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
 
-**Last updated:** `2025-05-16 15:21:42 UTC-03` 
+**Last updated:** `2025-05-16 22:13:51 UTC-03` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -19,10 +19,9 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 |------|--------|
 | `nx.ghostland.at` | ⚠️ Under maintenance |
 | `free.worldigital-brasil.com` | ⚠️ Unknown |
-| `tinfoil.oragne.dev` | ✅ OK |
-| `raw.githubusercontent.com` | ✅ OK |
 | `nx-saves.ghostland.at` | ✅ OK |
 | `nx-retro.ghostland.at` | ✅ OK |
+| `opennx.github.io` | ❌ DOWN (404) |
 | `switchbr.com` | ❌ DOWN (523) |
 | `games.jits.site` | ❌ DOWN (HTTPS and HTTP failed) |
 | `e.cchi.me` | ❌ DOWN (HTTPS and HTTP failed) |
