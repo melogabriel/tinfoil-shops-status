@@ -121,7 +121,7 @@ def generate_readme(results):
         f.write("- ❌ DOWN/Error — Shop not reachable or shows error\n\n")
 
         f.write("### Current Shop Status\n\n")
-        f.write("| Host | Status |\n")
+        f.write("| Shop | Status |\n")
         f.write("|------|--------|\n")
         for host, status in results:
             f.write(f"| `{host}` | {status} |\n")
