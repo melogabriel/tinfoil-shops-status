@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/melogabriel/tinfoil-shops/issues/new) or make a [pull request](https://github.com/melogabriel/tinfoil-shops/pulls).
 
-**Last updated:** `2025-05-23 09:31:41 UTC-03` 
+**Last updated:** `2025-05-23 15:21:11 UTC-03` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -20,13 +20,14 @@ If you have any shops to add, open an [issue](https://github.com/melogabriel/tin
 | Shop | Status |
 |------|--------|
 | `nx.ghostland.at` | ⚠️ Under maintenance |
-| `gandalfsax.com` | ⚠️ Unknown |
 | `free.worldigital-brasil.com` | ⚠️ Unknown |
 | `opennx.github.io` | ✅ OK |
+| `raw.githubusercontent.com` | ✅ OK |
 | `tinfoil.oragne.dev` | ✅ OK |
 | `raw.githubusercontent.com` | ✅ OK |
 | `nx-saves.ghostland.at` | ✅ OK |
 | `nx-retro.ghostland.at` | ✅ OK |
+| `gandalfsax.com` | ❌ DOWN (403) |
 | `switchbr.com` | ❌ DOWN (523) |
 | `games.jits.site` | ❌ DOWN (HTTPS and HTTP failed) |
 | `e.cchi.me` | ❌ DOWN (HTTPS and HTTP failed) |
