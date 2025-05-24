@@ -2,13 +2,13 @@
 
 ### Check which tinfoil shops are active and working for Nintendo Switch
 
-This page monitors the availability of Tinfoil shops from [this source list](https://melogabriel.github.io/tinfoil-shops/) and updates automatically every 6 hours.
+This page monitors the availability of Tinfoil shops from [this source list](https://opennx.github.io) and updates automatically every 6 hours.
 
 If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
 
-If you have any shops to add, open an [issue](https://github.com/melogabriel/tinfoil-shops/issues/new) or make a [pull request](https://github.com/melogabriel/tinfoil-shops/pulls).
+If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2025-05-24 09:28:55 UTC-03` 
+**Last updated:** `2025-05-24 15:20:00 UTC-03` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -19,10 +19,10 @@ If you have any shops to add, open an [issue](https://github.com/melogabriel/tin
 
 | Shop | Status |
 |------|--------|
+| `opennx.github.io` | ⚠️ Under maintenance |
 | `nx.ghostland.at` | ⚠️ Under maintenance |
 | `gandalfsax.com` | ⚠️ Unknown |
 | `free.worldigital-brasil.com` | ⚠️ Unknown |
-| `opennx.github.io` | ✅ OK |
 | `raw.githubusercontent.com` | ✅ OK |
 | `tinfoil.oragne.dev` | ✅ OK |
 | `raw.githubusercontent.com` | ✅ OK |
