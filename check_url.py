@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 import pytz  
 
-SOURCE_URL = "https://melogabriel.github.io/tinfoil-shops/"
+SOURCE_URL = "https://opennx.github.io"
 TIMEZONE = "America/Sao_Paulo"  # Change as needed
 
 
@@ -110,9 +110,9 @@ def generate_readme(results):
     with open("README.md", "w", encoding="utf-8") as f:
         f.write("[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml)\n\n")
         f.write("### Check which tinfoil shops are active and working for Nintendo Switch\n\n")
-        f.write("This page monitors the availability of Tinfoil shops from [this source list](https://melogabriel.github.io/tinfoil-shops/) and updates automatically every 6 hours.\n\n")
+        f.write("This page monitors the availability of Tinfoil shops from [this source list](https://opennx.github.io) and updates automatically every 6 hours.\n\n")
         f.write("If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!\n\n")
-        f.write("If you have any shops to add, open an [issue](https://github.com/melogabriel/tinfoil-shops/issues/new) or make a [pull request](https://github.com/melogabriel/tinfoil-shops/pulls).\n\n")
+        f.write("If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).\n\n")
         f.write(f"**Last updated:** `{last_updated}` \n\n")
 
         f.write("### Status Legend\n")
