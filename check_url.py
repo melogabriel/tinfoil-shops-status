@@ -109,6 +109,7 @@ def generate_readme(results):
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.write("[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml)\n\n")
+        f.write("[![Image repositories-views-counter](https://github.com/melogabriel/repositories-views-counter/blob/master/svg/964844222/badge.svg)](https://github.com/melogabriel/repositories-views-counter/blob/master/readme/964844222/week.md)\n\n")
         f.write("![GitHub Repo stars](https://img.shields.io/github/stars/melogabriel/tinfoil-shops-status)\n\n")
         f.write("![GitHub watchers](https://img.shields.io/github/watchers/melogabriel/tinfoil-shops-status)\n\n")
         f.write("### Check which tinfoil shops are active and working for Nintendo Switch\n\n")
