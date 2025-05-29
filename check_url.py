@@ -129,7 +129,7 @@ def generate_readme(results):
             f.write(f"| `{host}` | {status} |\n")
 
         f.write("\n---\n")
-        f.write("_This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only._\n")
+        f.write("> This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only._\n")
 
 def main():
     hosts = fetch_hosts()
