@@ -1,4 +1,4 @@
-[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml)![GitHub Repo stars](https://img.shields.io/github/stars/melogabriel/tinfoil-shops-status)![GitHub watchers](https://img.shields.io/github/watchers/melogabriel/tinfoil-shops-status)
+[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) ![GitHub Repo stars](https://img.shields.io/github/stars/melogabriel/tinfoil-shops-status) ![GitHub watchers](https://img.shields.io/github/watchers/melogabriel/tinfoil-shops-status)
 
 ### Check which tinfoil shops are active and working for Nintendo Switch
 
@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2025-06-04 15:22:49 UTC-03` 
+**Last updated:** `2025-06-04 22:16:12 UTC-03` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -20,11 +20,11 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | Shop | Status |
 |------|--------|
 | `nx.ghostland.at` | ⚠️ Under maintenance |
-| `gandalfsax.com` | ⚠️ Unknown |
 | `opennx.github.io` | ✅ OK |
 | `free.worldigital-brasil.com` | ✅ OK |
 | `nx-saves.ghostland.at` | ✅ OK |
 | `nx-retro.ghostland.at` | ✅ OK |
+| `gandalfsax.com` | ❌ DOWN (403) |
 | `switchbr.com` | ❌ DOWN (523) |
 | `games.jits.site` | ❌ DOWN (HTTPS and HTTP failed) |
 | `e.cchi.me` | ❌ DOWN (HTTPS and HTTP failed) |
