@@ -32,13 +32,13 @@ def check_individual_ghostland_status(status_url):
         content = response.text.lower()
 
         if "operational" in content:
-            return "✅ Operational (via Ghostland status page)"
+            return "✅ Operational"
         if "partial outage" in content:
-            return "⚠️ Partial outage (via Ghostland status page)"
+            return "⚠️ Partial outage"
         if "major outage" in content or "down" in content:
-            return "❌ Major outage (via Ghostland status page)"
+            return "❌ Major outage"
 
-        return "⚠️ Unknown status (via Ghostland status page)"
+        return "⚠️ Unknown status"
 
     except Exception as e:
         print(f"Error checking Ghostland status page {status_url}: {e}")
