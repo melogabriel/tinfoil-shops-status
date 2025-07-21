@@ -2,7 +2,7 @@
 
 ### Check which tinfoil shops are active and working for Nintendo Switch
 
-This page monitors the availability of Tinfoil shops from [this source list](https://opennx.github.io) and updates automatically every 6 hours.
+This page monitors the availability of Tinfoil shops from [this source list](https://opennx.github.io) and updates automatically every hour.
 
 If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
 
