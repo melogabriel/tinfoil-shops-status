@@ -2,7 +2,7 @@ name: Update Shop Status
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # every 6 hours
+    - cron: '0 */1 * * *'  # every 1 hours
   workflow_dispatch:
 
 jobs:
