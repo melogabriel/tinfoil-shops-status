@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2025-07-26 03:34:49 UTC-03` 
+**Last updated:** `2025-07-26 04:23:22 UTC-03` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -27,7 +27,7 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | `free.worldigital-brasil.com` | ✅ OK |
 | `nx-saves.ghostland.at` | ✅ OK |
 | `gandalfsax.com` | ❌ DOWN (403) |
-| `switchbr.com` | ❌ DOWN (521) |
+| `switchbr.com` | ❌ DOWN (523) |
 | `nx.ghostland.at` | ❌ DOWN (HTTPS and HTTP failed) |
 | `e.cchi.me` | ❌ DOWN (HTTPS and HTTP failed) |
 | `e.cchi.me` | ❌ DOWN (HTTPS and HTTP failed) |
