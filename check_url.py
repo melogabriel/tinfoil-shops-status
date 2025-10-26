@@ -6,7 +6,7 @@ import pytz
 from bs4 import BeautifulSoup
 
 SOURCE_URL = "https://opennx.github.io"
-TIMEZONE = "America/Sao_Paulo"
+TIMEZONE = "Europe/Lisbon"
 
 # Mapping Ghostland shops to their /up endpoints
 GHOSTLAND_UP_ENDPOINTS = {
