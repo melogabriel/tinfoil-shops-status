@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2025-11-01 12:41:49 WET` 
+**Last updated:** `2025-11-01 13:26:17 WET` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -21,7 +21,6 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 
 | Shop | Status |
 |------|--------|
-| `switchbr.com` | ⚠️ Possibly blank or minimal content |
 | `opennx.github.io` | ✅ OK |
 | `free.worldigital-brasil.com` | ✅ OK |
 | `magicmonkei.com` | ✅ OK |
