@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2025-11-03 14:24:14 WET` 
+**Last updated:** `2025-11-03 15:26:11 WET` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -23,11 +23,11 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 |------|--------|
 | `opennx.github.io` | ✅ OK |
 | `free.worldigital-brasil.com` | ✅ OK |
-| `magicmonkei.com` | ✅ OK |
-| `magicmonkei.com/app` | ✅ OK |
 | `nx.ghostland.at` | ✅ Operational |
 | `nx-retro.ghostland.at` | ✅ Operational |
 | `nx-saves.ghostland.at` | ✅ Operational |
+| `magicmonkei.com` | ❌ DOWN (HTTPS and HTTP failed) |
+| `magicmonkei.com/app` | ❌ DOWN (HTTPS and HTTP failed) |
 | `games.jits.site` | ❌ DOWN (HTTPS and HTTP failed) |
 | `e.cchi.me` | ❌ DOWN (HTTPS and HTTP failed) |
 | `e.cchi.me` | ❌ DOWN (HTTPS and HTTP failed) |
