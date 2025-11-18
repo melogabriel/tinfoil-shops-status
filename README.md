@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2025-11-18 14:24:04 WET` 
+**Last updated:** `2025-11-18 15:26:23 WET` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -22,12 +22,12 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | Shop | Status |
 |------|--------|
 | `opennx.github.io` | ✅ OK |
-| `nx.ghostland.at` | ❌ DOWN |
-| `nx-retro.ghostland.at` | ❌ DOWN |
-| `nx-saves.ghostland.at` | ❌ DOWN |
-| `magicmonkei.com` | ❌ DOWN (500) |
-| `magicmonkei.com/app` | ❌ DOWN (500) |
-| `free.worldigital-brasil.com` | ❌ DOWN (500) |
+| `magicmonkei.com` | ✅ OK |
+| `magicmonkei.com/app` | ✅ OK |
+| `free.worldigital-brasil.com` | ✅ OK |
+| `nx.ghostland.at` | ✅ Operational |
+| `nx-retro.ghostland.at` | ✅ Operational |
+| `nx-saves.ghostland.at` | ✅ Operational |
 | `cyrilz87.net` | ❌ Forced download (bad config) |
 
 ---
