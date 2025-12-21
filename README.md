@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2025-12-21 16:27:54 WET` 
+**Last updated:** `2025-12-21 17:20:09 WET` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -25,10 +25,10 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | `magicmonkei.com` | ✅ OK |
 | `magicmonkei.com/app` | ✅ OK |
 | `free.worldigital-brasil.com` | ✅ OK |
-| `nx.ghostland.at` | ✅ Operational |
-| `nx-retro.ghostland.at` | ✅ Operational |
 | `nx-saves.ghostland.at` | ✅ Operational |
-| `cyrilz87.net` | ❌ DOWN (403) |
+| `nx.ghostland.at` | ❌ DOWN |
+| `nx-retro.ghostland.at` | ❌ DOWN |
+| `cyrilz87.net` | ❌ Forced download (bad config) |
 
 ---
 > This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.
