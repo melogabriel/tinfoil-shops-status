@@ -79,7 +79,7 @@ def check_url_status(url):
     # 1. Check if the content (downloaded or rendered) has shop signatures
     if any(good in content for good in working_indicators):
         if is_download:
-            return "✅ OK (Direct Download/Index)"
+            return "✅ Operational"
         return "✅ OK"
 
     # 2. If it is HTML but no indicators, use BeautifulSoup to check for Maintenance
