@@ -2,7 +2,7 @@
 
 ### Tinfoil Shop Status Monitor
 
-**Last updated:** `2026-02-17 19:02:39 WET` 
+**Last updated:** `2026-02-17 20:42:04 WET` 
 
 ### Status Legend
 - ✅ OK — Shop is online (HTML, JSON, or Index file)
@@ -16,7 +16,7 @@
 | `opennx.github.io` | ✅ OK |
 | `magicmonkei.com` | ✅ OK |
 | `myrincon.es` | ✅ OK |
-| `cyrilz87.net` | ✅ OK (Direct Download/Index) |
+| `nx.ghostland.at` | ✅ Operational |
+| `nx-retro.ghostland.at` | ✅ Operational |
 | `nx-saves.ghostland.at` | ✅ Operational |
-| `nx.ghostland.at` | ❌ DOWN |
-| `nx-retro.ghostland.at` | ❌ DOWN |
+| `cyrilz87.net` | ✅ Operational |
