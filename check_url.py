@@ -65,10 +65,6 @@ def check_url_status(url):
     if response.status_code != 200:
         return f"❌ DOWN ({response.status_code})"
 
-    content_disposition = response.headers.get('Content-Disposition', '').lower()
-    if 'attachment' in content_disposition:
-        return "❌ Forced download (bad config)"
-
     content_type = response.headers.get('Content-Type', '').lower()
     if not content_type.startswith('text/html'):
         return "❌ Invalid content type (not HTML)"
