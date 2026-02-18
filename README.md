@@ -1,22 +1,35 @@
-[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) ![GitHub Repo stars](https://img.shields.io/github/stars/melogabriel/tinfoil-shops-status)
+[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) ![GitHub Repo stars](https://img.shields.io/github/stars/melogabriel/tinfoil-shops-status) ![GitHub watchers](https://img.shields.io/github/watchers/melogabriel/tinfoil-shops-status)
 
-### Tinfoil Shop Status Monitor
+### Check which tinfoil shops are active and working for Nintendo Switch
 
-**Last updated:** `2026-02-18 20:44:43 WET` 
+This page monitors the availability of Tinfoil shops from [this source list](https://opennx.github.io) and updates automatically every hour.
+
+If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
+
+If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
+
+**Last updated:** `2026-02-18 21:36:12 WET` 
 
 ### Status Legend
-- ✅ OK — Shop is online (HTML, JSON, or Index file)
-- ⚠️ Minimal/Maintenance — Site reachable but content is ambiguous
-- ❌ DOWN — Shop unreachable
+- ✅ OK — Shop is online and serving valid content
+- ✅ Operational (via Ghostland `/up` endpoint)
+- ⚠️ Possibly blank — Low-content or unusual page
+- ⚠️ Under maintenance
+- ❌ DOWN/Error — Shop not reachable or shows error
+
+### Current Shop Status
 
 | Shop | Status |
 |------|--------|
-| `magicmonkei.com/app` | ⚠️ Unknown/Empty |
-| `free.worldigital-brasil.com` | ⚠️ Unknown/Empty |
+| `magicmonkei.com/app` | ⚠️ Possibly blank or minimal content |
 | `opennx.github.io` | ✅ OK |
 | `magicmonkei.com` | ✅ OK |
+| `free.worldigital-brasil.com` | ✅ OK |
+| `cyrilz87.net` | ✅ OK |
 | `myrincon.es` | ✅ OK |
 | `nx.ghostland.at` | ✅ Operational |
 | `nx-retro.ghostland.at` | ✅ Operational |
 | `nx-saves.ghostland.at` | ✅ Operational |
-| `cyrilz87.net` | ✅ Operational |
+
+---
+> This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.
