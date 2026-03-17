@@ -82,7 +82,7 @@ def check_url_status(url):
     working_indicators = [
         ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
         "eshop", "shop", "switch", "game", "region", "release",
-        "\"files\":", "\"directories\":", "index.html"
+        "\"files\":", "\"directories\":", "index.html", "server"
     ]
 
     # If indicators are found in a download OR HTML, mark as OK
