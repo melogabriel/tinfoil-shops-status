@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-03-28 17:33:42 WET` 
+**Last updated:** `2026-03-28 18:48:05 WET` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -27,8 +27,8 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | `cyrilz87.net` | ✅ OK |
 | `myrincon.es` | ✅ OK |
 | `nx.ghostland.at` | ✅ Operational |
+| `nx-retro.ghostland.at` | ✅ Operational |
 | `nx-saves.ghostland.at` | ✅ Operational |
-| `nx-retro.ghostland.at` | ❌ DOWN |
 | `gandalfsax.com` | ❌ DOWN (403) |
 | `magicmonkei.com/app` | ❌ DOWN (HTTPS and HTTP failed) |
 
