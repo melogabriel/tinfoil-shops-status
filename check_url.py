@@ -31,7 +31,7 @@ def fetch_hosts():
         print(f"Failed to fetch host list: {e}")
         return []
 
-def check_ghostland_up(url):
+def check_ghostland_up(url) -> str:
     """Check Ghostland shops via their /up endpoint"""
     try:
         response = requests.get(GHOSTLAND_UP_ENDPOINTS[url], headers=HEADERS, timeout=10)
@@ -114,7 +114,7 @@ def check_url_status(url):
 
     return "⚠️ Unknown"
 
-def generate_readme(results):
+def generate_readme(results) -> None:
     results.sort(key=lambda x: x[1])
     tz = pytz.timezone(TIMEZONE)
     now = datetime.now(tz)
@@ -146,7 +146,7 @@ def generate_readme(results):
         f.write("\n---\n")
         f.write("> This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.\n")
 
-def main():
+def main() -> None:
     hosts = fetch_hosts()
     results = []
     for host in hosts:
