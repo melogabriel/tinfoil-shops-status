@@ -21,7 +21,7 @@ GHOSTLAND_UP_ENDPOINTS = {
     "nx-saves.ghostland.at": "https://nx.ghostland.at/up"
 }
 
-def fetch_hosts():
+def fetch_hosts() -> list:
     try:
         response = requests.get(SOURCE_URL, headers=HEADERS)
         response.raise_for_status()
@@ -31,7 +31,7 @@ def fetch_hosts():
         print(f"Failed to fetch host list: {e}")
         return []
 
-def check_ghostland_up(url):
+def check_ghostland_up(url: str) -> str:
     """Check Ghostland shops via their /up endpoint"""
     try:
         response = requests.get(GHOSTLAND_UP_ENDPOINTS[url], headers=HEADERS, timeout=10)
@@ -43,7 +43,7 @@ def check_ghostland_up(url):
         print(f"Error checking Ghostland /up for {url}: {e}")
         return "❌ DOWN"
 
-def check_url_status(url):
+def check_url_status(url: str) -> str:
     # Handle Ghostland shops via /up endpoints
     if url in GHOSTLAND_UP_ENDPOINTS:
         return check_ghostland_up(url)
@@ -114,7 +114,7 @@ def check_url_status(url):
 
     return "⚠️ Unknown"
 
-def generate_readme(results):
+def generate_readme(results) -> None:
     results.sort(key=lambda x: x[1])
     tz = pytz.timezone(TIMEZONE)
     now = datetime.now(tz)
@@ -146,7 +146,7 @@ def generate_readme(results):
         f.write("\n---\n")
         f.write("> This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.\n")
 
-def main():
+def main() -> None:
     hosts = fetch_hosts()
     results = []
     for host in hosts:
