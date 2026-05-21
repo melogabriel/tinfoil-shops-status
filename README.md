@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-05-21 21:55:08 WEST` 
+**Last updated:** `2026-05-21 23:22:56 WEST` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
