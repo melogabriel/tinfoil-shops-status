@@ -26,7 +26,10 @@ def fetch_hosts():
         response = requests.get(SOURCE_URL, headers=HEADERS)
         response.raise_for_status()
         hosts = re.findall(r"host:\s*(.+)", response.text, re.IGNORECASE)
-        return [h.strip() for h in hosts]
+        
+        # set() automatically drops any duplicate string found
+        return list(set(h.strip() for h in hosts))
+        
     except Exception as e:
         print(f"Failed to fetch host list: {e}")
         return []
