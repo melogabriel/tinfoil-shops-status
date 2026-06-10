@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-06-10 05:04:55 WEST` 
+**Last updated:** `2026-06-10 09:51:24 WEST` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -21,16 +21,16 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 
 | Shop | Status |
 |------|--------|
-| `pixelgoblin.link` | ✅ OK |
-| `opennx.github.io` | ✅ OK |
 | `myrincon.es` | ✅ OK |
+| `pixelgoblin.link` | ✅ OK |
 | `shop.magicmonkei.com` | ✅ OK |
+| `cyrilz87.net` | ✅ OK |
+| `opennx.github.io` | ✅ OK |
+| `nx.ghostland.at` | ❌ DOWN |
 | `nx-saves.ghostland.at` | ❌ DOWN |
 | `nx-retro.ghostland.at` | ❌ DOWN |
-| `nx.ghostland.at` | ❌ DOWN |
 | `free.worldigital-brasil.com` | ❌ DOWN (403) |
 | `gandalfsax.com` | ❌ DOWN (403) |
-| `cyrilz87.net` | ❌ DOWN (403) |
 | `cyberfoil.magicmonkei.com` | ❌ DOWN (404) |
 | `magicmonkei.com/app` | ❌ DOWN (HTTPS and HTTP failed) |
 
