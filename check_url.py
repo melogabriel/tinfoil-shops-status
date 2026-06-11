@@ -21,6 +21,13 @@ GHOSTLAND_UP_ENDPOINTS = {
     "nx-saves.ghostland.at": "https://nx.ghostland.at/up"
 }
 
+# Custom Links Mapping
+CUSTOM_SHOP_LINKS = {
+    "shop.magicmonkei.com": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
+    "magicmonkei.com/app": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
+    "pixelgoblin.link": "https://pixelgoblin.link/r/awarelocale28"
+}
+
 def fetch_hosts():
     try:
         response = requests.get(SOURCE_URL, headers=HEADERS)
@@ -77,7 +84,7 @@ def check_url_status(url):
     content_type = response.headers.get('Content-Type', '').lower()
     content = response.text.lower()
 
-    # --- UPDATED: Detection for HTML, JSON, and Forced Downloads ---
+    # --- Detection for HTML, JSON, and Forced Downloads ---
     is_html = 'text/html' in content_type
     is_download = any(t in content_type for t in ['application/octet-stream', 'application/json', 'application/x-forcedownload'])
 
@@ -143,12 +150,20 @@ def generate_readme(results):
         f.write("### Current Shop Status\n\n")
         f.write("| Shop | Status |\n")
         f.write("|------|--------|\n")
+        
         for host, status in results:
-            f.write(f"| `{host}` | {status} |\n")
+            # If it's a custom link, use it. Otherwise, build a default https:// link
+            if host in CUSTOM_SHOP_LINKS:
+                link_url = CUSTOM_SHOP_LINKS[host]
+            else:
+                link_url = f"https://{host}"
+                
+            shop_cell = f"[`{host}`]({link_url})"
+            f.write(f"| {shop_cell} | {status} |\n")
 
         f.write("\n---\n")
         f.write("> This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.\n")
-
+                
 def main():
     hosts = fetch_hosts()
     results = []
