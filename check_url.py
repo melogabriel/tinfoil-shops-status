@@ -24,6 +24,7 @@ GHOSTLAND_UP_ENDPOINTS = {
 # Custom Links Mapping
 CUSTOM_SHOP_LINKS = {
     "shop.magicmonkei.com": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
+    "cyberfoil.magicmonkei.com": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
     "magicmonkei.com/app": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
     "pixelgoblin.link": "https://pixelgoblin.link/r/awarelocale28"
 }
