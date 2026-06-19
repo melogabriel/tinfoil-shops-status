@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-06-18 23:15:02 WEST` 
+**Last updated:** `2026-06-19 02:45:28 WEST` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -21,11 +21,11 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 
 | Shop | Status |
 |------|--------|
+| [`pixelgoblin.link`](https://pixelgoblin.link/r/awarelocale28) | ✅ OK |
+| [`shop.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ✅ OK |
 | [`myrincon.es`](https://myrincon.es) | ✅ OK |
 | [`opennx.github.io`](https://opennx.github.io) | ✅ OK |
-| [`shop.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ✅ OK |
 | [`cyrilz87.net`](https://cyrilz87.net) | ✅ OK |
-| [`pixelgoblin.link`](https://pixelgoblin.link/r/awarelocale28) | ✅ OK |
 | [`nx.ghostland.at`](https://nx.ghostland.at) | ❌ DOWN |
 | [`nx-saves.ghostland.at`](https://nx-saves.ghostland.at) | ❌ DOWN |
 | [`nx-retro.ghostland.at`](https://nx-retro.ghostland.at) | ❌ DOWN |
