@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-07-01 01:09:36 WEST` 
+**Last updated:** `2026-07-01 06:24:16 WEST` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -27,11 +27,11 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | [`cyrilz87.net`](https://cyrilz87.net) | ✅ OK |
 | [`opennx.github.io`](https://opennx.github.io) | ✅ OK |
 | [`shop.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ✅ OK |
+| [`nx-saves.ghostland.at`](https://nx-saves.ghostland.at) | ✅ Operational |
 | [`nx.ghostland.at`](https://nx.ghostland.at) | ✅ Operational |
 | [`nx-retro.ghostland.at`](https://nx-retro.ghostland.at) | ✅ Operational |
-| [`nx-saves.ghostland.at`](https://nx-saves.ghostland.at) | ✅ Operational |
-| [`gandalfsax.com`](https://gandalfsax.com) | ❌ DOWN (403) |
 | [`free.worldigital-brasil.com`](https://free.worldigital-brasil.com) | ❌ DOWN (403) |
+| [`gandalfsax.com`](https://gandalfsax.com) | ❌ DOWN (403) |
 | [`cyberfoil.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (404) |
 | [`magicmonkei.com/app`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (HTTPS and HTTP failed) |
 
