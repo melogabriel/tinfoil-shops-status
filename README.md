@@ -8,7 +8,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-07-06 19:57:56 WEST` 
+**Last updated:** `2026-07-06 21:55:41 WEST` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -22,12 +22,12 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | Shop | Status |
 |------|--------|
 | [`cyrilz87.net`](https://cyrilz87.net) | ✅ OK |
+| [`shop.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ✅ OK |
 | [`opennx.github.io`](https://opennx.github.io) | ✅ OK |
 | [`myrincon.es`](https://myrincon.es) | ✅ OK |
 | [`pixelgoblin.link`](https://pixelgoblin.link/r/awarelocale28) | ✅ OK |
-| [`shop.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ✅ OK |
-| [`nx.ghostland.at`](https://nx.ghostland.at) | ✅ Operational |
 | [`nx-saves.ghostland.at`](https://nx-saves.ghostland.at) | ✅ Operational |
+| [`nx.ghostland.at`](https://nx.ghostland.at) | ✅ Operational |
 | [`nx-retro.ghostland.at`](https://nx-retro.ghostland.at) | ✅ Operational |
 | [`gandalfsax.com`](https://gandalfsax.com) | ❌ DOWN (403) |
 | [`free.worldigital-brasil.com`](https://free.worldigital-brasil.com) | ❌ DOWN (403) |
