@@ -166,113 +166,86 @@ def post_to_bluesky(results):
         print("Bluesky credentials missing from environment variables. Skipping post.")
         return
 
-    total = len(results)
-    online = sum(1 for _, status in results if "✅" in status)
-    issues = sum(1 for _, status in results if "⚠️" in status)
-    offline = sum(1 for _, status in results if "❌" in status)
-
-    tz = pytz.timezone(TIMEZONE)
-    now = datetime.now(tz)
-    timestamp = now.strftime('%H:%M %Z')
-
-    # --- 1. BUILD MAIN SCOREBOARD POST ---
-    main_tb = client_utils.TextBuilder()
-    main_tb.text(f"🎮 Tinfoil Shop Status Update ({timestamp})\n\n")
-    main_tb.text(f"🟢 Online: {online}/{total}\n")
-    main_tb.text(f"🟡 Issues/Maint: {issues}\n")
-    main_tb.text(f"🔴 Offline: {offline}\n\n")
-    main_tb.text("#NintendoSwitch #Tinfoil")
-
     try:
         client = Client()
         client.login(BLUESKY_HANDLE, BLUESKY_PASSWORD)
         
-        # Send main dashboard overview post
-        root_post = client.send_post(main_tb)
-        print("Successfully posted main summary to Bluesky!")
+        # Base setup
+        posts_to_send = []
+        current_tb = client_utils.TextBuilder()
+        current_tb.text("Tinfoil Shops Status:\n\n")
         
-        parent_reference = {'cid': root_post.cid, 'uri': root_post.uri}
-        root_reference = parent_reference.copy()
-
-        # --- 2. CHUNKED REPLIES FOR DIRECTORY ---
-        current_reply_tb = client_utils.TextBuilder()
-        current_reply_tb.text("📋 Current Shop Directory:\n\n")
-        
-        # Track characters safely within the 300 constraint limit
-        current_length = len(current_reply_tb.build_text())
+        current_length = len(current_tb.build_text())
 
         for host, status in results:
+            # Shorten the display status to save character spaces
             icon = "❌"
             if "✅" in status:
-                icon = "🟢"
+                icon = "✅"
             elif "⚠️" in status:
-                icon = "🟡"
+                icon = "⚠️"
 
-            # Compile line content into a temporary validation builder
+            # Create the exact string line formatting
             line_tb = client_utils.TextBuilder()
-            line_tb.text(f"{icon} {host} — ")
             
+            # Substring matching to map referral URLs hidden beneath the text
             link_url = None
             for custom_key, custom_url in CUSTOM_SHOP_LINKS.items():
                 if custom_key in host:
                     link_url = custom_url
                     break
             
-            if link_url:
-                line_tb.link("[Access]", link_url)
-            else:
-                line_tb.link("[Link]", f"https://{host}")
-            line_tb.text("\n")
+            if not link_url:
+                link_url = f"https://{host}"
 
-            line_text_len = len(line_tb.build_text())
+            # Make the host domain text itself a clickable redirect link!
+            line_tb.link(host, link_url)
+            line_tb.text(f"\t{icon}\n")
             
-            # Slice the thread response down if it goes beyond 240 bytes
-            if current_length + line_text_len > 240:
-                reply_post = client.send_post(
-                    current_reply_tb,
-                    reply_to={'root': root_reference, 'parent': parent_reference}
-                )
-                print("Posted directory chunk reply!")
-                
-                # Chain subsequent replies to the last sent post
-                parent_reference = {'cid': reply_post.cid, 'uri': reply_post.uri}
-                
-                current_reply_tb = client_utils.TextBuilder()
-                current_reply_tb.text("📋 Directory Continued:\n\n")
-                current_length = len(current_reply_tb.build_text())
+            line_text_len = len(line_tb.build_text())
 
-            # Append the text to the chunk
-            current_reply_tb.text(line_tb.build_text())
+            # If it overflows the 275 safety limit, pack the post and start a thread continuation
+            if current_length + line_text_len > 275:
+                posts_to_send.append(current_tb)
+                current_tb = client_utils.TextBuilder()
+                current_tb.text("Tinfoil Shops Status (Continued):\n\n")
+                current_length = len(current_tb.build_text())
+
+            # Append the text to the builder chunk safely
+            current_tb.text(line_tb.build_text())
             for facet in line_tb.build_facets():
-                # Correctly offset facet indices to align with the running text length
                 facet.index.byte_start += current_length
                 facet.index.byte_end += current_length
-                current_reply_tb.facets.append(facet)
+                current_tb.facets.append(facet)
                 
             current_length += line_text_len
 
-        # Emit any trailing remnants 
-        if current_length > len("📋 Directory Continued:\n\n") and current_length > len("📋 Current Shop Directory:\n\n"):
-            client.send_post(
-                current_reply_tb,
-                reply_to={'root': root_reference, 'parent': parent_reference}
-            )
-            print("Posted final directory chunk reply!")
+        # Append any leftover lines
+        if current_length > 0:
+            posts_to_send.append(current_tb)
+
+        # --- FIRE TO BLUESKY ---
+        parent_reference = None
+        root_reference = None
+
+        for idx, builder_payload in enumerate(posts_to_send):
+            if idx == 0:
+                # First post (or only post if it fits entirely)
+                root_post = client.send_post(builder_payload)
+                parent_reference = {'cid': root_post.cid, 'uri': root_post.uri}
+                root_reference = parent_reference.copy()
+                print("Successfully posted main status overview to Bluesky!")
+            else:
+                # Threaded overflow replies if your list is too large
+                reply_post = client.send_post(
+                    builder_payload,
+                    reply_to={'root': root_reference, 'parent': parent_reference}
+                )
+                parent_reference = {'cid': reply_post.cid, 'uri': reply_post.uri}
+                print(f"Posted automated thread slice #{idx}!")
 
     except Exception as e:
         print(f"Failed to post to Bluesky: {e}")
-
-def main():
-    hosts = fetch_hosts()
-    results = []
-    for host in hosts:
-        status = check_url_status(host)
-        print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {host} -> {status}")
-        results.append((host, status))
-    
-    # Run pipelines sequentially
-    generate_readme(results)
-    post_to_bluesky(results)
 
 if __name__ == "__main__":
     main()
