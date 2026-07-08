@@ -1,8 +1,23 @@
-[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) 
+[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) ![GitHub Repo stars](https://img.shields.io/github/stars/melogabriel/tinfoil-shops-status) ![GitHub watchers](https://img.shields.io/github/watchers/melogabriel/tinfoil-shops-status)
 
 ### Check which tinfoil shops are active and working for Nintendo Switch
 
-**Last updated:** `2026-07-08 18:06:30 WEST` 
+This page monitors the availability of Tinfoil shops from [this source list](https://opennx.github.io) and updates automatically every hour.
+
+If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
+
+If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
+
+**Last updated:** `2026-07-08 18:13:39 WEST` 
+
+### Status Legend
+- ✅ OK — Shop is online and serving valid content
+- ✅ Operational (via Ghostland `/up` endpoint)
+- ⚠️ Possibly blank — Low-content or unusual page
+- ⚠️ Under maintenance
+- ❌ DOWN/Error — Shop not reachable or shows error
+
+### Current Shop Status
 
 | Shop | Status |
 |------|--------|
@@ -18,3 +33,6 @@
 | [`gandalfsax.com`](https://gandalfsax.com) | ❌ DOWN (403) |
 | [`cyberfoil.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (404) |
 | [`magicmonkei.com/app`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (HTTPS and HTTP failed) |
+
+---
+> This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.
