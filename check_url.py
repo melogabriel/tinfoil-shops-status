@@ -1,3 +1,4 @@
+import os
 import requests
 import re
 import time
@@ -9,12 +10,11 @@ from bs4 import BeautifulSoup
 SOURCE_URL = "https://opennx.github.io"
 TIMEZONE = "Europe/Lisbon"
 
-# --- TWITTER API CREDENTIALS ---
-# Replace these strings with your actual keys from developer.x.com
-TWITTER_API_KEY = "YOUR_API_KEY"
-TWITTER_API_SECRET = "YOUR_API_SECRET"
-TWITTER_ACCESS_TOKEN = "YOUR_ACCESS_TOKEN"
-TWITTER_ACCESS_TOKEN_SECRET = "YOUR_ACCESS_TOKEN_SECRET"
+# --- READ SECURITY CREDENTIALS FROM ENVIRONMENT ---
+TWITTER_API_KEY = os.environ.get("TWITTER_API_KEY")
+TWITTER_API_SECRET = os.environ.get("TWITTER_API_SECRET")
+TWITTER_ACCESS_TOKEN = os.environ.get("TWITTER_ACCESS_TOKEN")
+TWITTER_ACCESS_TOKEN_SECRET = os.environ.get("TWITTER_ACCESS_TOKEN_SECRET")
 
 # Using a Switch-like User-Agent to pass through shop firewalls/filters
 HEADERS = {
@@ -29,7 +29,7 @@ GHOSTLAND_UP_ENDPOINTS = {
     "nx-saves.ghostland.at": "https://nx.ghostland.at/up"
 }
 
-# Custom Links Mapping
+# --- YOUR CUSTOM SHOP LINKS ---
 CUSTOM_SHOP_LINKS = {
     "magicmonkei.com": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
     "pixelgoblin.link": "https://pixelgoblin.link/r/awarelocale28"
@@ -148,9 +148,16 @@ def generate_readme(results):
         f.write("|------|--------|\n")
         
         for host, status in results:
-            if host in CUSTOM_SHOP_LINKS:
-                link_url = CUSTOM_SHOP_LINKS[host]
-            else:
+            link_url = None
+            
+            # Substring matching ensures 'magicmonkei.com/app' matches your custom key
+            for custom_key, custom_url in CUSTOM_SHOP_LINKS.items():
+                if custom_key in host:
+                    link_url = custom_url
+                    break
+            
+            # Default fallback URL
+            if not link_url:
                 link_url = f"https://{host}"
                 
             shop_cell = f"[`{host}`]({link_url})"
@@ -160,6 +167,11 @@ def generate_readme(results):
         f.write("> This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.\n")
 
 def post_to_twitter(results):
+    # Verify environment values exist to avoid unhandled Tweepy exceptions
+    if not all([TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET]):
+        print("Twitter configuration missing from environment variables. Skipping post.")
+        return
+
     total = len(results)
     online = sum(1 for _, status in results if "✅" in status)
     issues = sum(1 for _, status in results if "⚠️" in status)
@@ -169,13 +181,29 @@ def post_to_twitter(results):
     now = datetime.now(tz)
     timestamp = now.strftime('%H:%M %Z')
 
+    # Build the custom links section for the Tweet
+    custom_links_text = ""
+    for host, status in results:
+        # Only share the custom link if the shop is active and online
+        if "✅" in status:
+            for custom_key, custom_url in CUSTOM_SHOP_LINKS.items():
+                if custom_key in host:
+                    custom_links_text += f"🔗 {custom_key}:\n{custom_url}\n\n"
+                    break
+
+    # Build the final payload template
     tweet_text = (
         f"🎮 Tinfoil Shop Status Update ({timestamp})\n\n"
         f"🟢 Online: {online}/{total}\n"
         f"🟡 Issues/Maint: {issues}\n"
         f"🔴 Offline: {offline}\n\n"
-        f"#NintendoSwitch #Tinfoil"
     )
+
+    # Inject referral links dynamically if they are operational
+    if custom_links_text:
+        tweet_text += f"🌟 Featured:\n{custom_links_text}"
+
+    tweet_text += "#NintendoSwitch #Tinfoil"
 
     try:
         client = tweepy.Client(
@@ -197,7 +225,7 @@ def main():
         print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {host} -> {status}")
         results.append((host, status))
     
-    # Run both targets sequentially
+    # Run targets sequentially
     generate_readme(results)
     post_to_twitter(results)
 
