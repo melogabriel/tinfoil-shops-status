@@ -2,34 +2,29 @@ import os
 import requests
 import re
 import time
-import tweepy
 from datetime import datetime
 import pytz
 from bs4 import BeautifulSoup
+from atproto import Client, client_utils
 
 SOURCE_URL = "https://opennx.github.io"
 TIMEZONE = "Europe/Lisbon"
 
 # --- READ SECURITY CREDENTIALS FROM ENVIRONMENT ---
-TWITTER_API_KEY = os.environ.get("TWITTER_API_KEY")
-TWITTER_API_SECRET = os.environ.get("TWITTER_API_SECRET")
-TWITTER_ACCESS_TOKEN = os.environ.get("TWITTER_ACCESS_TOKEN")
-TWITTER_ACCESS_TOKEN_SECRET = os.environ.get("TWITTER_ACCESS_TOKEN_SECRET")
+BLUESKY_HANDLE = os.environ.get("BLUESKY_HANDLE")
+BLUESKY_PASSWORD = os.environ.get("BLUESKY_PASSWORD")
 
-# Using a Switch-like User-Agent to pass through shop firewalls/filters
 HEADERS = {
     "User-Agent": "Tinfoil/17.0 (Nintendo Switch)",
     "Accept": "*/*"
 }
 
-# Mapping Ghostland shops to their /up endpoints
 GHOSTLAND_UP_ENDPOINTS = {
     "nx.ghostland.at": "https://nx.ghostland.at/up",
     "nx-retro.ghostland.at": "https://nx.ghostland.at/up",
     "nx-saves.ghostland.at": "https://nx.ghostland.at/up"
 }
 
-# --- YOUR CUSTOM SHOP LINKS ---
 CUSTOM_SHOP_LINKS = {
     "magicmonkei.com": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
     "pixelgoblin.link": "https://pixelgoblin.link/r/awarelocale28"
@@ -40,7 +35,7 @@ def fetch_hosts():
         response = requests.get(SOURCE_URL, headers=HEADERS)
         response.raise_for_status()
         hosts = re.findall(r"host:\s*(.+)", response.text, re.IGNORECASE)
-        return list(dict.fromkeys(h.strip() for h in hosts))  # Filters duplicates, preserves order
+        return list(dict.fromkeys(h.strip() for h in hosts))
     except Exception as e:
         print(f"Failed to fetch host list: {e}")
         return []
@@ -67,10 +62,8 @@ def check_url_status(url):
             print(f"Fetching: {full_url} -> {response.status_code}")
             return response
         except requests.exceptions.SSLError:
-            print(f"SSL error on {scheme}://{url}, trying fallback...")
             return None
-        except requests.exceptions.RequestException as e:
-            print(f"{scheme.upper()} error for {url}: {e}")
+        except requests.exceptions.RequestException:
             return None
 
     response = try_fetch("https")
@@ -127,49 +120,28 @@ def generate_readme(results):
     last_updated = now.strftime('%Y-%m-%d %H:%M:%S %Z')
 
     with open("README.md", "w", encoding="utf-8") as f:
-        f.write("[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) ")
-        f.write("![GitHub Repo stars](https://img.shields.io/github/stars/melogabriel/tinfoil-shops-status) ")
-        f.write("![GitHub watchers](https://img.shields.io/github/watchers/melogabriel/tinfoil-shops-status)\n\n")
+        f.write("[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) \n\n")
         f.write("### Check which tinfoil shops are active and working for Nintendo Switch\n\n")
-        f.write("This page monitors the availability of Tinfoil shops from [this source list](https://opennx.github.io) and updates automatically every hour.\n\n")
-        f.write("If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!\n\n")
-        f.write("If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).\n\n")
         f.write(f"**Last updated:** `{last_updated}` \n\n")
 
-        f.write("### Status Legend\n")
-        f.write("- ✅ OK — Shop is online and serving valid content\n")
-        f.write("- ✅ Operational (via Ghostland `/up` endpoint)\n")
-        f.write("- ⚠️ Possibly blank — Low-content or unusual page\n")
-        f.write("- ⚠️ Under maintenance\n")
-        f.write("- ❌ DOWN/Error — Shop not reachable or shows error\n\n")
-
-        f.write("### Current Shop Status\n\n")
         f.write("| Shop | Status |\n")
         f.write("|------|--------|\n")
         
         for host, status in results:
             link_url = None
-            
-            # Substring matching ensures 'magicmonkei.com/app' matches your custom key
             for custom_key, custom_url in CUSTOM_SHOP_LINKS.items():
                 if custom_key in host:
                     link_url = custom_url
                     break
             
-            # Default fallback URL
             if not link_url:
                 link_url = f"https://{host}"
                 
-            shop_cell = f"[`{host}`]({link_url})"
-            f.write(f"| {shop_cell} | {status} |\n")
+            f.write(f"| [`{host}`]({link_url}) | {status} |\n")
 
-        f.write("\n---\n")
-        f.write("> This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.\n")
-
-def post_to_twitter(results):
-    # Verify environment values exist to avoid unhandled Tweepy exceptions
-    if not all([TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET]):
-        print("Twitter configuration missing from environment variables. Skipping post.")
+def post_to_bluesky(results):
+    if not BLUESKY_HANDLE or not BLUESKY_PASSWORD:
+        print("Bluesky credentials missing from environment variables. Skipping post.")
         return
 
     total = len(results)
@@ -181,53 +153,46 @@ def post_to_twitter(results):
     now = datetime.now(tz)
     timestamp = now.strftime('%H:%M %Z')
 
-    # Build the custom links section for the Tweet
-    custom_links_text = ""
+    # Using TextBuilder to cleanly map rich clickable links to Bluesky
+    tb = client_utils.TextBuilder()
+    tb.text(f"🎮 Tinfoil Shop Status Update ({timestamp})\n\n")
+    tb.text(f"🟢 Online: {online}/{total}\n")
+    tb.text(f"🟡 Issues/Maint: {issues}\n")
+    tb.text(f"🔴 Offline: {offline}\n\n")
+
+    # Check and add active referral links dynamically
+    has_featured = False
     for host, status in results:
-        # Only share the custom link if the shop is active and online
         if "✅" in status:
             for custom_key, custom_url in CUSTOM_SHOP_LINKS.items():
                 if custom_key in host:
-                    custom_links_text += f"🔗 {custom_key}:\n{custom_url}\n\n"
+                    if not has_featured:
+                        tb.text("🌟 Featured:\n")
+                        has_featured = True
+                    tb.text(f"🔗 {custom_key}\n")
+                    tb.link("[Register Here]", custom_url)
+                    tb.text("\n\n")
                     break
 
-    # Build the final payload template
-    tweet_text = (
-        f"🎮 Tinfoil Shop Status Update ({timestamp})\n\n"
-        f"🟢 Online: {online}/{total}\n"
-        f"🟡 Issues/Maint: {issues}\n"
-        f"🔴 Offline: {offline}\n\n"
-    )
-
-    # Inject referral links dynamically if they are operational
-    if custom_links_text:
-        tweet_text += f"🌟 Featured:\n{custom_links_text}"
-
-    tweet_text += "#NintendoSwitch #Tinfoil"
+    tb.text("#NintendoSwitch #Tinfoil")
 
     try:
-        client = tweepy.Client(
-            consumer_key=TWITTER_API_KEY,
-            consumer_secret=TWITTER_API_SECRET,
-            access_token=TWITTER_ACCESS_TOKEN,
-            access_token_secret=TWITTER_ACCESS_TOKEN_SECRET
-        )
-        response = client.create_tweet(text=tweet_text)
-        print(f"Successfully tweeted! Tweet ID: {response.data['id']}")
+        client = Client()
+        client.login(BLUESKY_HANDLE, BLUESKY_PASSWORD)
+        client.send_post(tb)
+        print("Successfully posted to Bluesky!")
     except Exception as e:
-        print(f"Failed to post to Twitter: {e}")
+        print(f"Failed to post to Bluesky: {e}")
 
 def main():
     hosts = fetch_hosts()
     results = []
     for host in hosts:
         status = check_url_status(host)
-        print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {host} -> {status}")
         results.append((host, status))
     
-    # Run targets sequentially
     generate_readme(results)
-    post_to_twitter(results)
+    post_to_bluesky(results)
 
 if __name__ == "__main__":
     main()
