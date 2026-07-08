@@ -166,74 +166,68 @@ def post_to_bluesky(results):
         print("Bluesky credentials missing from environment variables. Skipping post.")
         return
 
+    total = len(results)
+    online = sum(1 for _, status in results if "✅" in status)
+    issues = sum(1 for _, status in results if "⚠️" in status)
+    offline = sum(1 for _, status in results if "❌" in status)
+
+    tz = pytz.timezone(TIMEZONE)
+    now = datetime.now(tz)
+    timestamp = now.strftime('%H:%M %Z')
+
+    main_tb = client_utils.TextBuilder()
+    main_tb.text(f"🎮 Tinfoil Shop Status Update ({timestamp})\n\n")
+    main_tb.text(f"🟢 Online: {online}/{total}\n")
+    main_tb.text(f"🟡 Issues/Maint: {issues}\n")
+    main_tb.text(f"🔴 Offline: {offline}\n\n")
+    main_tb.text("#NintendoSwitch #Tinfoil")
+
     try:
         client = Client()
         client.login(BLUESKY_HANDLE, BLUESKY_PASSWORD)
         
-        posts_to_send = []
-        current_tb = client_utils.TextBuilder()
-        current_tb.text("Tinfoil Shops Status:\n\n")
+        root_post = client.send_post(main_tb)
+        print("Successfully posted main summary to Bluesky!")
         
-        current_length = len(current_tb.build_text())
+        parent_reference = {'cid': root_post.cid, 'uri': root_post.uri}
+        root_reference = parent_reference.copy()
 
+        lines = []
         for host, status in results:
-            icon = "❌"
-            if "✅" in status:
-                icon = "✅"
-            elif "⚠️" in status:
-                icon = "⚠️"
-
-            line_tb = client_utils.TextBuilder()
-            
+            icon = "✅" if "✅" in status else ("⚠️" if "⚠️" in status else "❌")
             link_url = None
             for custom_key, custom_url in CUSTOM_SHOP_LINKS.items():
                 if custom_key in host:
                     link_url = custom_url
                     break
-            
             if not link_url:
                 link_url = f"https://{host}"
+            lines.append((host, link_url, icon))
 
-            # Hyperlinks the host text directly
-            line_tb.link(host, link_url)
-            line_tb.text(f"\t{icon}\n")
-            
-            line_text_len = len(line_tb.build_text())
-
-            # Automatically splits the post if it approaches the 300 character ceiling
-            if current_length + line_text_len > 275:
-                posts_to_send.append(current_tb)
+        chunks = []
+        current_tb = client_utils.TextBuilder()
+        current_tb.text("Tinfoil Shops Status:\n\n")
+        
+        for host, link_url, icon in lines:
+            test_len = len(current_tb.build_text()) + len(host) + len(icon) + 3
+            if test_len > 270:
+                chunks.append(current_tb)
                 current_tb = client_utils.TextBuilder()
                 current_tb.text("Tinfoil Shops Status (Continued):\n\n")
-                current_length = len(current_tb.build_text())
+            
+            current_tb.link(host, link_url)
+            current_tb.text(f"\t{icon}\n")
+            
+        if len(current_tb.build_text()) > len("Tinfoil Shops Status:\n\n"):
+            chunks.append(current_tb)
 
-            current_tb.text(line_tb.build_text())
-            for facet in line_tb.build_facets():
-                facet.index.byte_start += current_length
-                facet.index.byte_end += current_length
-                current_tb.facets.append(facet)
-                
-            current_length += line_text_len
-
-        if current_length > 0:
-            posts_to_send.append(current_tb)
-
-        parent_reference = None
-        root_reference = None
-
-        for idx, builder_payload in enumerate(posts_to_send):
-            if idx == 0:
-                root_post = client.send_post(builder_payload)
-                parent_reference = {'cid': root_post.cid, 'uri': root_post.uri}
-                root_reference = parent_reference.copy()
-                print("Successfully posted main status overview to Bluesky!")
-            else:
-                reply_post = client.send_post(
-                    builder_payload,
-                    reply_to={'root': root_reference, 'parent': parent_reference}
-                )
-                parent_reference = {'cid': reply_post.cid, 'uri': reply_post.uri}
-                print(f"Posted automated thread slice #{idx}!")
+        for idx, chunk_tb in enumerate(chunks):
+            reply_post = client.send_post(
+                chunk_tb,
+                reply_to={'root': root_reference, 'parent': parent_reference}
+            )
+            parent_reference = {'cid': reply_post.cid, 'uri': reply_post.uri}
+            print(f"Posted directory chunk reply #{idx+1}!")
 
     except Exception as e:
         print(f"Failed to post to Bluesky: {e}")
@@ -246,7 +240,6 @@ def main():
         print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {host} -> {status}")
         results.append((host, status))
     
-    # Run pipelines sequentially
     generate_readme(results)
     post_to_bluesky(results)
 
