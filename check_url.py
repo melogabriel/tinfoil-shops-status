@@ -170,7 +170,6 @@ def post_to_bluesky(results):
         client = Client()
         client.login(BLUESKY_HANDLE, BLUESKY_PASSWORD)
         
-        # Base setup
         posts_to_send = []
         current_tb = client_utils.TextBuilder()
         current_tb.text("Tinfoil Shops Status:\n\n")
@@ -178,17 +177,14 @@ def post_to_bluesky(results):
         current_length = len(current_tb.build_text())
 
         for host, status in results:
-            # Shorten the display status to save character spaces
             icon = "❌"
             if "✅" in status:
                 icon = "✅"
             elif "⚠️" in status:
                 icon = "⚠️"
 
-            # Create the exact string line formatting
             line_tb = client_utils.TextBuilder()
             
-            # Substring matching to map referral URLs hidden beneath the text
             link_url = None
             for custom_key, custom_url in CUSTOM_SHOP_LINKS.items():
                 if custom_key in host:
@@ -198,20 +194,19 @@ def post_to_bluesky(results):
             if not link_url:
                 link_url = f"https://{host}"
 
-            # Make the host domain text itself a clickable redirect link!
+            # Hyperlinks the host text directly
             line_tb.link(host, link_url)
             line_tb.text(f"\t{icon}\n")
             
             line_text_len = len(line_tb.build_text())
 
-            # If it overflows the 275 safety limit, pack the post and start a thread continuation
+            # Automatically splits the post if it approaches the 300 character ceiling
             if current_length + line_text_len > 275:
                 posts_to_send.append(current_tb)
                 current_tb = client_utils.TextBuilder()
                 current_tb.text("Tinfoil Shops Status (Continued):\n\n")
                 current_length = len(current_tb.build_text())
 
-            # Append the text to the builder chunk safely
             current_tb.text(line_tb.build_text())
             for facet in line_tb.build_facets():
                 facet.index.byte_start += current_length
@@ -220,23 +215,19 @@ def post_to_bluesky(results):
                 
             current_length += line_text_len
 
-        # Append any leftover lines
         if current_length > 0:
             posts_to_send.append(current_tb)
 
-        # --- FIRE TO BLUESKY ---
         parent_reference = None
         root_reference = None
 
         for idx, builder_payload in enumerate(posts_to_send):
             if idx == 0:
-                # First post (or only post if it fits entirely)
                 root_post = client.send_post(builder_payload)
                 parent_reference = {'cid': root_post.cid, 'uri': root_post.uri}
                 root_reference = parent_reference.copy()
                 print("Successfully posted main status overview to Bluesky!")
             else:
-                # Threaded overflow replies if your list is too large
                 reply_post = client.send_post(
                     builder_payload,
                     reply_to={'root': root_reference, 'parent': parent_reference}
@@ -246,6 +237,18 @@ def post_to_bluesky(results):
 
     except Exception as e:
         print(f"Failed to post to Bluesky: {e}")
+
+def main():
+    hosts = fetch_hosts()
+    results = []
+    for host in hosts:
+        status = check_url_status(host)
+        print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {host} -> {status}")
+        results.append((host, status))
+    
+    # Run pipelines sequentially
+    generate_readme(results)
+    post_to_bluesky(results)
 
 if __name__ == "__main__":
     main()
