@@ -1,12 +1,20 @@
 import requests
 import re
 import time
+import tweepy
 from datetime import datetime
 import pytz
 from bs4 import BeautifulSoup
 
 SOURCE_URL = "https://opennx.github.io"
 TIMEZONE = "Europe/Lisbon"
+
+# --- TWITTER API CREDENTIALS ---
+# Replace these strings with your actual keys from developer.x.com
+TWITTER_API_KEY = "YOUR_API_KEY"
+TWITTER_API_SECRET = "YOUR_API_SECRET"
+TWITTER_ACCESS_TOKEN = "YOUR_ACCESS_TOKEN"
+TWITTER_ACCESS_TOKEN_SECRET = "YOUR_ACCESS_TOKEN_SECRET"
 
 # Using a Switch-like User-Agent to pass through shop firewalls/filters
 HEADERS = {
@@ -23,9 +31,7 @@ GHOSTLAND_UP_ENDPOINTS = {
 
 # Custom Links Mapping
 CUSTOM_SHOP_LINKS = {
-    "shop.magicmonkei.com": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
-    "cyberfoil.magicmonkei.com": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
-    "magicmonkei.com/app": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
+    "magicmonkei.com": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
     "pixelgoblin.link": "https://pixelgoblin.link/r/awarelocale28"
 }
 
@@ -34,16 +40,12 @@ def fetch_hosts():
         response = requests.get(SOURCE_URL, headers=HEADERS)
         response.raise_for_status()
         hosts = re.findall(r"host:\s*(.+)", response.text, re.IGNORECASE)
-        
-        # set() automatically drops any duplicate string found
-        return list(set(h.strip() for h in hosts))
-        
+        return list(dict.fromkeys(h.strip() for h in hosts))  # Filters duplicates, preserves order
     except Exception as e:
         print(f"Failed to fetch host list: {e}")
         return []
 
 def check_ghostland_up(url):
-    """Check Ghostland shops via their /up endpoint"""
     try:
         response = requests.get(GHOSTLAND_UP_ENDPOINTS[url], headers=HEADERS, timeout=10)
         response.raise_for_status()
@@ -55,14 +57,12 @@ def check_ghostland_up(url):
         return "❌ DOWN"
 
 def check_url_status(url):
-    # Handle Ghostland shops via /up endpoints
     if url in GHOSTLAND_UP_ENDPOINTS:
         return check_ghostland_up(url)
 
     def try_fetch(scheme):
         try:
             full_url = f"{scheme}://{url}"
-            # allow_redirects=True handles URLs that point directly to files
             response = requests.get(full_url, headers=HEADERS, timeout=12, allow_redirects=True)
             print(f"Fetching: {full_url} -> {response.status_code}")
             return response
@@ -85,22 +85,18 @@ def check_url_status(url):
     content_type = response.headers.get('Content-Type', '').lower()
     content = response.text.lower()
 
-    # --- Detection for HTML, JSON, and Forced Downloads ---
     is_html = 'text/html' in content_type
     is_download = any(t in content_type for t in ['application/octet-stream', 'application/json', 'application/x-forcedownload'])
 
-    # Keywords for any format (HTML or direct file download)
     working_indicators = [
         ".nsp", ".xci", "/files/", "tinfoil", ".nsz", ".iso",
         "eshop", "shop", "switch", "game", "region", "release",
         "\"files\":", "\"directories\":", "index.html", "server"
     ]
 
-    # If indicators are found in a download OR HTML, mark as OK
     if any(good in content for good in working_indicators):
         return "✅ OK"
 
-    # Fallback to HTML-specific parsing if no obvious indicators found
     if is_html:
         soup = BeautifulSoup(content, "html.parser")
         title_text = soup.title.string.strip().lower() if soup.title else ""
@@ -119,7 +115,6 @@ def check_url_status(url):
         if len(content.strip()) < 300:
             return "⚠️ Possibly blank or minimal content"
 
-    # Final check: if it was a download but had no indicators
     if is_download:
         return "⚠️ Unknown download content"
 
@@ -153,7 +148,6 @@ def generate_readme(results):
         f.write("|------|--------|\n")
         
         for host, status in results:
-            # If it's a custom link, use it. Otherwise, build a default https:// link
             if host in CUSTOM_SHOP_LINKS:
                 link_url = CUSTOM_SHOP_LINKS[host]
             else:
@@ -164,7 +158,37 @@ def generate_readme(results):
 
         f.write("\n---\n")
         f.write("> This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.\n")
-                
+
+def post_to_twitter(results):
+    total = len(results)
+    online = sum(1 for _, status in results if "✅" in status)
+    issues = sum(1 for _, status in results if "⚠️" in status)
+    offline = sum(1 for _, status in results if "❌" in status)
+
+    tz = pytz.timezone(TIMEZONE)
+    now = datetime.now(tz)
+    timestamp = now.strftime('%H:%M %Z')
+
+    tweet_text = (
+        f"🎮 Tinfoil Shop Status Update ({timestamp})\n\n"
+        f"🟢 Online: {online}/{total}\n"
+        f"🟡 Issues/Maint: {issues}\n"
+        f"🔴 Offline: {offline}\n\n"
+        f"#NintendoSwitch #Tinfoil"
+    )
+
+    try:
+        client = tweepy.Client(
+            consumer_key=TWITTER_API_KEY,
+            consumer_secret=TWITTER_API_SECRET,
+            access_token=TWITTER_ACCESS_TOKEN,
+            access_token_secret=TWITTER_ACCESS_TOKEN_SECRET
+        )
+        response = client.create_tweet(text=tweet_text)
+        print(f"Successfully tweeted! Tweet ID: {response.data['id']}")
+    except Exception as e:
+        print(f"Failed to post to Twitter: {e}")
+
 def main():
     hosts = fetch_hosts()
     results = []
@@ -172,7 +196,10 @@ def main():
         status = check_url_status(host)
         print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {host} -> {status}")
         results.append((host, status))
+    
+    # Run both targets sequentially
     generate_readme(results)
+    post_to_twitter(results)
 
 if __name__ == "__main__":
     main()
