@@ -14,17 +14,20 @@ TIMEZONE = "Europe/Lisbon"
 BLUESKY_HANDLE = os.environ.get("BLUESKY_HANDLE")
 BLUESKY_PASSWORD = os.environ.get("BLUESKY_PASSWORD")
 
+# Using a Switch-like User-Agent to pass through shop firewalls/filters
 HEADERS = {
     "User-Agent": "Tinfoil/17.0 (Nintendo Switch)",
     "Accept": "*/*"
 }
 
+# Mapping Ghostland shops to their /up endpoints
 GHOSTLAND_UP_ENDPOINTS = {
     "nx.ghostland.at": "https://nx.ghostland.at/up",
     "nx-retro.ghostland.at": "https://nx.ghostland.at/up",
     "nx-saves.ghostland.at": "https://nx.ghostland.at/up"
 }
 
+# --- YOUR CUSTOM SHOP LINKS ---
 CUSTOM_SHOP_LINKS = {
     "magicmonkei.com": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
     "pixelgoblin.link": "https://pixelgoblin.link/r/awarelocale28"
@@ -35,7 +38,7 @@ def fetch_hosts():
         response = requests.get(SOURCE_URL, headers=HEADERS)
         response.raise_for_status()
         hosts = re.findall(r"host:\s*(.+)", response.text, re.IGNORECASE)
-        return list(dict.fromkeys(h.strip() for h in hosts))
+        return list(dict.fromkeys(h.strip() for h in hosts))  # Filters duplicates, preserves order
     except Exception as e:
         print(f"Failed to fetch host list: {e}")
         return []
@@ -62,8 +65,10 @@ def check_url_status(url):
             print(f"Fetching: {full_url} -> {response.status_code}")
             return response
         except requests.exceptions.SSLError:
+            print(f"SSL error on {scheme}://{url}, trying fallback...")
             return None
-        except requests.exceptions.RequestException:
+        except requests.exceptions.RequestException as e:
+            print(f"{scheme.upper()} error for {url}: {e}")
             return None
 
     response = try_fetch("https")
@@ -120,24 +125,44 @@ def generate_readme(results):
     last_updated = now.strftime('%Y-%m-%d %H:%M:%S %Z')
 
     with open("README.md", "w", encoding="utf-8") as f:
-        f.write("[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) \n\n")
+        f.write("[![Update Shop Status](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml/badge.svg)](https://github.com/melogabriel/tinfoil-shops-status/actions/workflows/update.yml) ")
+        f.write("![GitHub Repo stars](https://img.shields.io/github/stars/melogabriel/tinfoil-shops-status) ")
+        f.write("![GitHub watchers](https://img.shields.io/github/watchers/melogabriel/tinfoil-shops-status)\n\n")
         f.write("### Check which tinfoil shops are active and working for Nintendo Switch\n\n")
+        f.write("This page monitors the availability of Tinfoil shops from [this source list](https://opennx.github.io) and updates automatically every hour.\n\n")
+        f.write("If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!\n\n")
+        f.write("If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).\n\n")
         f.write(f"**Last updated:** `{last_updated}` \n\n")
 
+        f.write("### Status Legend\n")
+        f.write("- ✅ OK — Shop is online and serving valid content\n")
+        f.write("- ✅ Operational (via Ghostland `/up` endpoint)\n")
+        f.write("- ⚠️ Possibly blank — Low-content or unusual page\n")
+        f.write("- ⚠️ Under maintenance\n")
+        f.write("- ❌ DOWN/Error — Shop not reachable or shows error\n\n")
+
+        f.write("### Current Shop Status\n\n")
         f.write("| Shop | Status |\n")
         f.write("|------|--------|\n")
         
         for host, status in results:
             link_url = None
+            
+            # Substring matching ensures 'magicmonkei.com/app' matches your custom key
             for custom_key, custom_url in CUSTOM_SHOP_LINKS.items():
                 if custom_key in host:
                     link_url = custom_url
                     break
             
+            # Default fallback URL
             if not link_url:
                 link_url = f"https://{host}"
                 
-            f.write(f"| [`{host}`]({link_url}) | {status} |\n")
+            shop_cell = f"[`{host}`]({link_url})"
+            f.write(f"| {shop_cell} | {status} |\n")
+
+        f.write("\n---\n")
+        f.write("> This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.\n")
 
 def post_to_bluesky(results):
     if not BLUESKY_HANDLE or not BLUESKY_PASSWORD:
@@ -153,34 +178,65 @@ def post_to_bluesky(results):
     now = datetime.now(tz)
     timestamp = now.strftime('%H:%M %Z')
 
-    # Using TextBuilder to cleanly map rich clickable links to Bluesky
-    tb = client_utils.TextBuilder()
-    tb.text(f"🎮 Tinfoil Shop Status Update ({timestamp})\n\n")
-    tb.text(f"🟢 Online: {online}/{total}\n")
-    tb.text(f"🟡 Issues/Maint: {issues}\n")
-    tb.text(f"🔴 Offline: {offline}\n\n")
+    # --- 1. BUILD MAIN POST ---
+    main_tb = client_utils.TextBuilder()
+    main_tb.text(f"🎮 Tinfoil Shop Status Update ({timestamp})\n\n")
+    main_tb.text(f"🟢 Online: {online}/{total}\n")
+    main_tb.text(f"🟡 Issues/Maint: {issues}\n")
+    main_tb.text(f"🔴 Offline: {offline}\n\n")
+    main_tb.text("#NintendoSwitch #Tinfoil")
 
-    # Check and add active referral links dynamically
-    has_featured = False
+    # --- 2. BUILD DETAILS POST (THE REPLY) ---
+    reply_tb = client_utils.TextBuilder()
+    reply_tb.text("📋 Current Shop Directory:\n\n")
+
     for host, status in results:
+        icon = "❌"
         if "✅" in status:
-            for custom_key, custom_url in CUSTOM_SHOP_LINKS.items():
-                if custom_key in host:
-                    if not has_featured:
-                        tb.text("🌟 Featured:\n")
-                        has_featured = True
-                    tb.text(f"🔗 {custom_key}\n")
-                    tb.link("[Register Here]", custom_url)
-                    tb.text("\n\n")
-                    break
+            icon = "🟢"
+        elif "⚠️" in status:
+            icon = "🟡"
 
-    tb.text("#NintendoSwitch #Tinfoil")
+        reply_tb.text(f"{icon} {host} — ")
+        
+        # Checking for custom referral links mapping
+        link_url = None
+        for custom_key, custom_url in CUSTOM_SHOP_LINKS.items():
+            if custom_key in host:
+                link_url = custom_url
+                break
+        
+        if link_url:
+            reply_tb.link("[Access]", link_url)
+        else:
+            reply_tb.link("[Link]", f"https://{host}")
+            
+        reply_tb.text("\n")
 
     try:
         client = Client()
         client.login(BLUESKY_HANDLE, BLUESKY_PASSWORD)
-        client.send_post(tb)
-        print("Successfully posted to Bluesky!")
+        
+        # Send the main scoreboard post
+        root_post = client.send_post(main_tb)
+        print("Successfully posted main summary to Bluesky!")
+        
+        # Create the thread reply mapping structure
+        parent_reference = {
+            'cid': root_post.cid,
+            'uri': root_post.uri
+        }
+        
+        # Send the shop list as a nested reply thread
+        client.send_post(
+            reply_tb,
+            reply_to={
+                'root': parent_reference,
+                'parent': parent_reference
+            }
+        )
+        print("Successfully posted detailed shop list thread reply!")
+        
     except Exception as e:
         print(f"Failed to post to Bluesky: {e}")
 
@@ -189,8 +245,10 @@ def main():
     results = []
     for host in hosts:
         status = check_url_status(host)
+        print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {host} -> {status}")
         results.append((host, status))
     
+    # Run targets sequentially
     generate_readme(results)
     post_to_bluesky(results)
 
