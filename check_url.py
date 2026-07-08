@@ -175,12 +175,17 @@ def post_to_bluesky(results):
     now = datetime.now(tz)
     timestamp = now.strftime('%H:%M %Z')
 
+    # --- 1. BUILD MAIN SUMMARY POST WITH CLICKABLE HASHTAGS ---
     main_tb = client_utils.TextBuilder()
     main_tb.text(f"🎮 Tinfoil Shop Status Update ({timestamp})\n\n")
     main_tb.text(f"🟢 Online: {online}/{total}\n")
     main_tb.text(f"🟡 Issues/Maint: {issues}\n")
     main_tb.text(f"🔴 Offline: {offline}\n\n")
-    main_tb.text("#NintendoSwitch #Tinfoil")
+    
+    # Registering hashtags as official interactive tags
+    main_tb.tag("#NintendoSwitch", "NintendoSwitch")
+    main_tb.text(" ")
+    main_tb.tag("#Tinfoil", "Tinfoil")
 
     try:
         client = Client()
@@ -192,6 +197,7 @@ def post_to_bluesky(results):
         parent_reference = {'cid': root_post.cid, 'uri': root_post.uri}
         root_reference = parent_reference.copy()
 
+        # --- 2. BUILD DIRECTORY REPLIES ---
         lines = []
         for host, status in results:
             icon = "✅" if "✅" in status else ("⚠️" if "⚠️" in status else "❌")
