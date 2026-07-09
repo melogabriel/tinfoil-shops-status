@@ -9,7 +9,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-  # Schedule to run every 6 hours
+  # Schedule to run every 1 hour
   schedule:
     - cron: '0 */1 * * *'  # Every 1 hour
 
@@ -27,13 +27,13 @@ concurrency:
 
 jobs:
   # Build job
-  build:
+   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
