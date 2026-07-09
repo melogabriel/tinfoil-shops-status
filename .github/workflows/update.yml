@@ -2,8 +2,8 @@ name: Update Shop Status
 
 on:
   schedule:
-    # Runs automatically every hour
-    - cron: '0 * * * *'
+    - cron: '0 */1 * * *'
+
   workflow_dispatch:
     # Allows you to trigger the run manually from the GitHub Actions tab
 
