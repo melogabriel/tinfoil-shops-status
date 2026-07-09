@@ -4,11 +4,13 @@
 
 This page monitors the availability of Tinfoil shops from [this source list](https://opennx.github.io) and updates automatically every hour.
 
+To receive updates automatically, follow [Tinfoil Status on BlueSky](https://bsky.app/profile/tinfoilstatus.bsky.social).
+
 If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/melogabriel/tinfoil-shops-status)!
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-07-09 07:46:11 WEST` 
+**Last updated:** `2026-07-09 11:00:19 WEST` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
