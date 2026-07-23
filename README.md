@@ -10,7 +10,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-07-23 14:29:54 WEST` 
+**Last updated:** `2026-07-23 16:50:36 WEST` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -26,7 +26,6 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | [`opennx.github.io`](https://opennx.github.io) | ✅ OK |
 | [`shop.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ✅ OK |
 | [`pixelgoblin.link`](https://pixelgoblin.link/r/awarelocale28) | ✅ OK |
-| [`cyrilz87.net`](https://cyrilz87.net) | ✅ OK |
 | [`myrincon.es`](https://myrincon.es) | ✅ OK |
 | [`nx.ghostland.at`](https://nx.ghostland.at) | ✅ Operational |
 | [`nx-retro.ghostland.at`](https://nx-retro.ghostland.at) | ✅ Operational |
@@ -35,6 +34,7 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | [`gandalfsax.com`](https://gandalfsax.com) | ❌ DOWN (403) |
 | [`cyberfoil.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (404) |
 | [`magicmonkei.com/app`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (HTTPS and HTTP failed) |
+| [`cyrilz87.net`](https://cyrilz87.net) | ❌ DOWN (HTTPS and HTTP failed) |
 
 ---
 > This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.
