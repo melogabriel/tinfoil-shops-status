@@ -10,7 +10,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-08-12 21:41:51 WEST` 
+**Last updated:** `2026-08-12 22:37:30 WEST` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
