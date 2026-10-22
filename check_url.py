@@ -30,6 +30,7 @@ GHOSTLAND_UP_ENDPOINTS = {
 # --- YOUR CUSTOM SHOP LINKS ---
 CUSTOM_SHOP_LINKS = {
     "magicmonkei.com": "https://dashboard.magicmonkei.com/pt/signup?ref=opennx",
+    "gameupdate.org": "https://gameupdate.org/r/trsfe5km",
     "pixelgoblin.link": "https://pixelgoblin.link/r/awarelocale28"
 }
 
