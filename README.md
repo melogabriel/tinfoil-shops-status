@@ -10,7 +10,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-11-13 01:35:49 WET` 
+**Last updated:** `2026-11-13 08:57:09 WET` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -31,7 +31,7 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | [`myrincon.es`](https://myrincon.es) | ✅ OK |
 | [`nx.ghostland.at`](https://nx.ghostland.at) | ✅ Operational |
 | [`nx-retro.ghostland.at`](https://nx-retro.ghostland.at) | ✅ Operational |
-| [`nx-saves.ghostland.at`](https://nx-saves.ghostland.at) | ✅ Operational |
+| [`nx-saves.ghostland.at`](https://nx-saves.ghostland.at) | ❌ DOWN |
 | [`gandalfsax.com`](https://gandalfsax.com) | ❌ DOWN (403) |
 | [`cyberfoil.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (404) |
 | [`magicmonkei.com/app`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (HTTPS and HTTP failed) |
