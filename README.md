@@ -10,7 +10,7 @@ If this tool is useful, consider giving it a ⭐ on [GitHub](https://github.com/
 
 If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.github.io/issues/new/choose) or make a [pull request](https://github.com/OpenNX/opennx.github.io/pulls).
 
-**Last updated:** `2026-11-18 18:31:52 WET` 
+**Last updated:** `2026-11-19 00:52:20 WET` 
 
 ### Status Legend
 - ✅ OK — Shop is online and serving valid content
@@ -34,7 +34,7 @@ If you have any shops to add, open an [issue](https://github.com/OpenNX/opennx.g
 | [`nx-saves.ghostland.at`](https://nx-saves.ghostland.at) | ✅ Operational |
 | [`gandalfsax.com`](https://gandalfsax.com) | ❌ DOWN (403) |
 | [`cyberfoil.magicmonkei.com`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (404) |
-| [`magicmonkei.com/app`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (HTTPS and HTTP failed) |
+| [`magicmonkei.com/app`](https://dashboard.magicmonkei.com/pt/signup?ref=opennx) | ❌ DOWN (404) |
 
 ---
 > This project is not affiliated with Tinfoil. This is for educational and monitoring purposes only.
